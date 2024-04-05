@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -47,8 +48,15 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
                         .ticksRandomly()
                         .emissiveLighting((state, world, pos) -> true)
         );
-        this.setDefaultState(getDefaultState().with(AGE, 0).with(MASTER, false).with(CLOUD, false));
+        this.setDefaultState(getDefaultState().with(AGE, 0).with(MASTER, false).with(CLOUD, true));
 
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        // Quantum fields placed by the player are not clouds
+        return super.getPlacementState(ctx).with(CLOUD, false);
     }
 
     @Override
