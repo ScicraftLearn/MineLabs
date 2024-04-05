@@ -21,9 +21,6 @@ public class MinelabsGameRules {
     public static final GameRules.Key<GameRules.BooleanRule> CHARGED_DROPS_ON_BLOCKHIT = GameRuleRegistry.register(
             "chargedDropsOnBlockhit", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
 
-    public static final GameRules.Key<GameRules.BooleanRule> QUANTUMFIELDS_AS_CLOUDS = GameRuleRegistry.register(
-            "enableQuantumfieldClouds", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
-
     public static void onInitialize() {
     }
 }
