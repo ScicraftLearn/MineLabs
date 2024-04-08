@@ -48,6 +48,7 @@ public class LangProvider extends MinelabsLangProvider {
         builder.add(Blocks.LAB_DRAWER, "Lab Drawers");
         builder.add(Blocks.LAB_SINK, "Lab Sink");
         builder.add(Blocks.LAB_CABIN, "Lab Cabin");
+        builder.add(Blocks.LAB_LEWIS, "Lewis Crafting Table");
         builder.add(Blocks.LAB_CENTER, "Lab Center");
         builder.add(Blocks.LAB_CORNER, "Lab Corner");
         builder.add(Blocks.MICROSCOPE, "Microscope");

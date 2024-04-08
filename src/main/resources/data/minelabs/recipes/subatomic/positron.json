@@ -1,0 +1,12 @@
+{
+  "group":"quarks",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minelabs:subatomic/weak_boson" },
+    { "item": "minelabs:subatomic/antineutrino" }
+  ],
+  "result": {
+    "item": "minelabs:subatomic/positron",
+    "count": 1
+  }
+}

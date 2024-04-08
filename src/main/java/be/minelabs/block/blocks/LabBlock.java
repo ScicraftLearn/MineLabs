@@ -20,19 +20,19 @@ public abstract class LabBlock extends Block {
 
     protected static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
 
-    private static final VoxelShape SHAPE_N = VoxelShapes.union(
+    public static final VoxelShape SHAPE_N = VoxelShapes.union(
             Block.createCuboidShape(0.0, 0.0, 1.0, 16.0, 13.0, 16.0), //base
             Block.createCuboidShape(0.0, 14.0, 15.0, 16.0, 15.0, 16.0), //edge
             Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 14.0, 16.0)); // top
-    private static final VoxelShape SHAPE_E = VoxelShapes.union(
+    public static final VoxelShape SHAPE_E = VoxelShapes.union(
             Block.createCuboidShape(0.0, 0.0, 0.0, 15.0, 13.0, 16.0), //base
             Block.createCuboidShape(0.0, 14.0, 0.0, 1.0, 15.0, 16.0), //edge
             Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 14.0, 16.0)); // top
-    private static final VoxelShape SHAPE_S = VoxelShapes.union(
+    public static final VoxelShape SHAPE_S = VoxelShapes.union(
             Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 13.0, 15.0), //base
             Block.createCuboidShape(0.0, 14.0, 0.0, 16.0, 15.0, 1.0), //edge
             Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 14.0, 16.0)); // top
-    private static final VoxelShape SHAPE_W = VoxelShapes.union(
+    public static final VoxelShape SHAPE_W = VoxelShapes.union(
             Block.createCuboidShape(1.0, 0.0, 0.0, 16.0, 13.0, 16.0), //base
             Block.createCuboidShape(15.0, 14.0, 0.0, 16.0, 15.0, 16.0), //edge
             Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 14.0, 16.0)); // top

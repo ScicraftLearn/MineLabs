@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "minelabs:block/quantumfield/electron_quantumfield" }
+        "": { "model": "minelabs:block/quantumfield/electron_quantumfield/alpha_transform" }
     }
 }

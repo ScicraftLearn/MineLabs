@@ -46,6 +46,7 @@ public class FlemishLangProvider extends MinelabsLangProvider {
         builder.add(Blocks.LAB_DRAWER, "Labo Ladenkast");
         builder.add(Blocks.LAB_SINK, "Labo Wastafel");
         builder.add(Blocks.LAB_CABIN, "Labo Kast");
+        builder.add(Blocks.LAB_LEWIS, "Lewis Werkbank");
         builder.add(Blocks.LAB_CENTER, "Labotafel (Midden)");
         builder.add(Blocks.LAB_CORNER, "Labotafel (Hoek)");
         builder.add(Blocks.MICROSCOPE, "Microscoop");

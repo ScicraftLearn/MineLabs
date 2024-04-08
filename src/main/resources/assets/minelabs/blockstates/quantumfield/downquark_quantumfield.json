@@ -1,12 +1,12 @@
 {
     "variants": {
-        "x_odd=false,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_000" },
-        "x_odd=false,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_001" },
-        "x_odd=false,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_010" },
-        "x_odd=false,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_011" },
-        "x_odd=true,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_100" },
-        "x_odd=true,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_101" },
-        "x_odd=true,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_110" },
-        "x_odd=true,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_111" }
+        "x_odd=false,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_000/alpha_transform" },
+        "x_odd=false,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_001/alpha_transform" },
+        "x_odd=false,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_010/alpha_transform" },
+        "x_odd=false,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_011/alpha_transform" },
+        "x_odd=true,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_100/alpha_transform" },
+        "x_odd=true,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_101/alpha_transform" },
+        "x_odd=true,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/downquark/downquark_110/alpha_transform" },
+        "x_odd=true,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/downquark/downquark_111/alpha_transform" }
     }
 }

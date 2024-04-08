@@ -28,7 +28,8 @@ public class BlockEntities {
                         Blocks.IONIC_BLOCK).build(null));
 
         LEWIS_BLOCK_ENTITY = register(
-                FabricBlockEntityTypeBuilder.create(LewisBlockEntity::new, Blocks.LEWIS_BLOCK).build(null), "lewis_block");
+                FabricBlockEntityTypeBuilder.create(LewisBlockEntity::new,
+                        Blocks.LEWIS_BLOCK, Blocks.LAB_LEWIS).build(null), "lewis_block");
 
         ELECTRIC_FIELD_SENSOR = register(FabricBlockEntityTypeBuilder.create((p, s) ->
                 new ElectricFieldSensorBlockEntity(ELECTRIC_FIELD_SENSOR, p, s),

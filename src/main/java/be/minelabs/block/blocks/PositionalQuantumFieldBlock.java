@@ -14,7 +14,6 @@ public class PositionalQuantumFieldBlock extends QuantumfieldBlock{
 
     public static final BooleanProperty X_ODD = BooleanProperty.of("x_odd");
     public static final BooleanProperty Y_ODD = BooleanProperty.of("y_odd");
-
     public static final BooleanProperty Z_ODD = BooleanProperty.of("z_odd");
 
     public PositionalQuantumFieldBlock(){

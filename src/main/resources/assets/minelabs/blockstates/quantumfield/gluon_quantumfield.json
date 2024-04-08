@@ -1,12 +1,12 @@
 {
     "variants": {
-        "x_odd=false,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_000" },
-        "x_odd=false,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_001" },
-        "x_odd=false,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_010" },
-        "x_odd=false,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_011" },
-        "x_odd=true,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_100" },
-        "x_odd=true,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_101" },
-        "x_odd=true,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_110" },
-        "x_odd=true,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_111" }
+        "x_odd=false,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_000/alpha_transform" },
+        "x_odd=false,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_001/alpha_transform" },
+        "x_odd=false,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_010/alpha_transform" },
+        "x_odd=false,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_011/alpha_transform" },
+        "x_odd=true,y_odd=false,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_100/alpha_transform" },
+        "x_odd=true,y_odd=false,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_101/alpha_transform" },
+        "x_odd=true,y_odd=true,z_odd=false": { "model": "minelabs:block/quantumfield/gluon/gluon_110/alpha_transform" },
+        "x_odd=true,y_odd=true,z_odd=true": { "model": "minelabs:block/quantumfield/gluon/gluon_111/alpha_transform" }
     }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minelabs:block/lab/lab_lewis"
+    },
+    "facing=east": {
+      "model": "minelabs:block/lab/lab_lewis",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minelabs:block/lab/lab_lewis",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minelabs:block/lab/lab_lewis",
+      "y": 270
+    }
+  }
+}

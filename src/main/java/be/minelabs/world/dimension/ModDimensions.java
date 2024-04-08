@@ -15,6 +15,10 @@ import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 
 public class ModDimensions {
+
+    // How far the player can reach in the subatomic dimension
+    public static final float SUBATOMIC_REACH_DISTANCE = 20f;
+
     private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(RegistryKeys.DIMENSION, new Identifier(Minelabs.MOD_ID, "subatom"));
     public static RegistryKey<World> SUBATOM_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
     public static final RegistryKey<DimensionType> DIMENSION_TYPE_KEY = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, new Identifier(Minelabs.MOD_ID, "subatom_type"));

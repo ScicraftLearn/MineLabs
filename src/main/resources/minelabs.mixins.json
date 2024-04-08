@@ -17,6 +17,7 @@
     "FishingBobberEntityAccessor",
     "IceBlockMixin",
     "LivingEntityMixin",
-    "MobEntityMixin"
+    "MobEntityMixin",
+    "ServerPlayNetworkHandlerMixin"
   ]
 }
