@@ -25,6 +25,7 @@
     "charge": 1
   },
   "result": {
-    "item": "minelabs:erlenmeyer/erlenmeyer_nh3"
-  }
+    "item": "minelabs:salt/salt"
+  },
+  "container": false
 }

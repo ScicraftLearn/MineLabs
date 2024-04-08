@@ -27,7 +27,7 @@ import java.util.Map;
 @Environment(EnvType.CLIENT)
 public class IonicScreen extends HandledScreen<IonicBlockScreenHandler> implements ScreenHandlerProvider<IonicBlockScreenHandler> {
 
-    private static final Identifier TEXTURE = new Identifier(Minelabs.MOD_ID, "textures/block/ioniccrafting/ionic_gui.png");
+    private static final Identifier TEXTURE = new Identifier(Minelabs.MOD_ID, "textures/gui/ionic/ionic_gui.png");
 
     //just the height and width of the texture
     public IonicScreen(IonicBlockScreenHandler handler, PlayerInventory inventory, Text title) {

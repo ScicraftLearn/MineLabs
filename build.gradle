@@ -1,162 +1,180 @@
 plugins {
-	id 'fabric-loom' version '1.2-SNAPSHOT'
-	id 'maven-publish'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'maven-publish'
 }
 
 version = project.mod_version
 group = project.maven_group
 
 base {
-	archivesName = project.archives_base_name
+    archivesName = project.archives_base_name
 }
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
 
-	maven {
-		name = "WTHIT"
-		url = "https://maven.bai.lol"
-	}
-	maven {
-		url = "https://maven.kyrptonaught.dev"
-	}
-	// info: https://github.com/Wyn-Price/CurseMaven
-	maven {
-		url = 'https://www.cursemaven.com'
-		content {
-			includeGroup "curse.maven"
-		}
-	}
-	maven {
-		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-	}
-	// info: https://github.com/fzzyhmstrs/structurized-reborn
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-		content {
-			includeGroup "maven.modrinth"
-		}
-	}
+    maven {
+        name = "WTHIT"
+        url = "https://maven.bai.lol"
+    }
+    maven {
+        url = "https://maven.kyrptonaught.dev"
+    }
+    // info: https://github.com/Wyn-Price/CurseMaven
+    maven {
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
+    // info: https://github.com/fzzyhmstrs/structurized-reborn
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    // info: https://github.com/emilyploszaj/emi
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+    // info: https://github.com/shedaniel/RoughlyEnoughItems
+    maven {
+        url = "https://maven.shedaniel.me"
+    }
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// hard dependency -> actually includes it in our jar
-	include "net.kyrptonaught:customportalapi:${project.portal_api_verion}" exclude module: "sodium"
-	include "maven.modrinth:Wd844r7Q:${project.structure_api_verion}"
-	include "curse.maven:DisableCustomWorldsAdvice-401978:${project.dcwa_file}"
-	include "software.bernie.geckolib:geckolib-fabric-${project.geckolib_verion}"
+    // soft Dependency -> Could be installed alongside our mod
+    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
 
-	// depend on source -> it needs to be installed alongside our mod or also be a hard dependency
-	modImplementation "net.kyrptonaught:customportalapi:${project.portal_api_verion}" exclude module: "sodium"
-	modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib_verion}"
-	modImplementation "maven.modrinth:Wd844r7Q:${project.structure_api_verion}"
+    // hard dependency -> actually includes it in our jar
+    include "net.kyrptonaught:customportalapi:${project.portal_api_verion}" exclude module: "sodium"
+    include "maven.modrinth:Wd844r7Q:${project.structure_api_verion}"
+    include "curse.maven:DisableCustomWorldsAdvice-401978:${project.dcwa_file}"
+    include "software.bernie.geckolib:geckolib-fabric-${project.geckolib_verion}"
 
-	// debug dependency -> only used while running mod, not included or needed when released
-	// Mods (none API's) that are actually running, also need to be included.
-	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
-	modRuntimeOnly "curse.maven:DisableCustomWorldsAdvice-401978:${project.dcwa_file}"
+    // depend on source -> it needs to be installed alongside our mod or also be a hard dependency
+    modImplementation "net.kyrptonaught:customportalapi:${project.portal_api_verion}" exclude module: "sodium"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib_verion}"
+    modImplementation "maven.modrinth:Wd844r7Q:${project.structure_api_verion}"
+
+    // debug dependency -> only used while running mod, not included or needed when released
+    // Mods (none API's) that are actually running, also need to be included.
+    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+    modRuntimeOnly "curse.maven:DisableCustomWorldsAdvice-401978:${project.dcwa_file}"
+
+    // at runtime, use the full jar for Fabric
+    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 }
 
 processResources {
-	inputs.property "version", project.version
+    inputs.property "version", project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 (21w19a) upwards uses Java 17.
-	it.options.release = 17
+    // Minecraft 1.18 (21w19a) upwards uses Java 17.
+    it.options.release = 17
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/minelabs.accesswidener")
-	
-	runs {
-		datagen {
-			inherit server
+    accessWidenerPath = file("src/main/resources/minelabs.accesswidener")
 
-			name = "Data Generation"
-			runDir = "build/datagen"
+    runs {
+        datagen {
+            inherit server
 
-			vmArg "-Dfabric-api.datagen"
-			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=${mod_id}"
-		}
+            name = "Data Generation"
+            runDir = "build/datagen"
 
-		client {
-			vmArg "-Dgeckolib.disable_examples=true"
-		}
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+        }
 
-		server {
-			vmArg "-Dgeckolib.disable_examples=true"
-		}
-	}
+        client {
+            vmArg "-Dgeckolib.disable_examples=true"
+        }
 
-	splitEnvironmentSourceSets()
+        server {
+            vmArg "-Dgeckolib.disable_examples=true"
+        }
+    }
 
-	mods {
-		"${mod_id}" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
+    splitEnvironmentSourceSets()
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
 }
 assemble.dependsOn(runDatagen)
 
 sourceSets {
-	main {
-		resources {
-			srcDirs += [
-				"src/main/generated"
-			]
-		}
-	}
+    main {
+        resources {
+            srcDirs += [
+                    "src/main/generated"
+            ]
+        }
+    }
 }
 
 // configure the maven publication
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
+    }
 } 

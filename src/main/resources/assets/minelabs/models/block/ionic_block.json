@@ -14,8 +14,8 @@
   },
   "texture_size": [64, 64],
   "textures": {
-    "2": "minelabs:block/ioniccrafting/ionic_block",
-    "particle": "minelabs:block/ioniccrafting/ionic_block"
+    "2": "minelabs:block/ionic_block",
+    "particle": "minelabs:block/ionic_block"
   },
   "elements": [
     {

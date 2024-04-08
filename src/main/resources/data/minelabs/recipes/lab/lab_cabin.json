@@ -17,9 +17,11 @@
         "item": "minecraft:chest"
       }
     ],
-    "w": {
-      "tag": "minecraft:quartz_block"
-    }
+    "w": [
+      {
+        "tag": "minecraft:quartz_block"
+      }
+    ]
   },
   "result": {
     "item": "minelabs:lab/lab_cabin",

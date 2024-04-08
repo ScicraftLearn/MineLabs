@@ -12,9 +12,11 @@
         "item": "minecraft:smooth_stone_slab"
       }
     ],
-    "w": {
-      "tag": "minecraft:quartz_block"
-    }
+    "w": [
+      {
+        "tag": "minecraft:quartz_block"
+      }
+    ]
   },
   "result": {
     "item": "minelabs:lab/lab_center",

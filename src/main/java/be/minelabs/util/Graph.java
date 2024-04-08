@@ -72,11 +72,11 @@ public class Graph<V, E> {
             return vertices;
         }
 
-        public Vertex getFirst(){
+        public Vertex getFirst() {
             return vertices.stream().toList().get(0);
         }
 
-        public Vertex getSecond(){
+        public Vertex getSecond() {
             return vertices.stream().toList().get(1);
         }
 
@@ -100,7 +100,7 @@ public class Graph<V, E> {
     }
 
     @Nullable
-    public Edge getEdge(Vertex v1, Vertex v2){
+    public Edge getEdge(Vertex v1, Vertex v2) {
         Set<Vertex> vertices = Set.of(v1, v2);
         return edges.getOrDefault(vertices, null);
     }
@@ -126,8 +126,8 @@ public class Graph<V, E> {
         return edge;
     }
 
-    public void removeEdge(Edge e){
-        for (Vertex v:e.vertices){
+    public void removeEdge(Edge e) {
+        for (Vertex v : e.vertices) {
             v.edges.remove(e);
         }
         edges.remove(e.vertices);
@@ -174,12 +174,12 @@ public class Graph<V, E> {
         List<Vertex> vertices = new ArrayList<>();
         vertices.add(this.vertices.get(0));
         boolean hasAdded = true;
-        while(hasAdded) {
+        while (hasAdded) {
             hasAdded = false;
             List<Vertex> copy = new ArrayList<>(vertices);
-            for(Vertex v: copy) {
-                for(Vertex w: v.getNeighbours()) {
-                    if(!vertices.contains(w)) {
+            for (Vertex v : copy) {
+                for (Vertex w : v.getNeighbours()) {
+                    if (!vertices.contains(w)) {
                         vertices.add(w);
                         hasAdded = true;
                     }

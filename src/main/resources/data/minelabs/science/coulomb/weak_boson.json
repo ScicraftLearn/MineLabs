@@ -5,11 +5,11 @@
   "charge": 0,
   "mass": 3,
   "annihilation_drop": {
-    "item" : "minelabs:subatomic/photon",
+    "item": "minelabs:subatomic/photon",
     "count": 2
   },
   "decay_drop": {
-    "item" : "minelabs:subatomic/electron",
+    "item": "minelabs:subatomic/electron",
     "count": 1
   }
 }

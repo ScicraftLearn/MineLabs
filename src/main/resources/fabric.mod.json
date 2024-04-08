@@ -15,7 +15,7 @@
   "license": "TODO",
   "icon": "assets/minelabs/icon.png",
   "environment": "*",
-  "accessWidener" : "minelabs.accesswidener",
+  "accessWidener": "minelabs.accesswidener",
   "entrypoints": {
     "main": [
       "be.minelabs.Minelabs"
@@ -25,6 +25,15 @@
     ],
     "fabric-datagen": [
       "be.minelabs.data.Datagen"
+    ],
+    "emi": [
+      "be.minelabs.client.integration.emi.MinelabsEmiPlugin"
+    ],
+    "rei_server": [
+      "be.minelabs.integration.rei.MinelabsReiPlugin"
+    ],
+    "rei_client": [
+      "be.minelabs.client.integration.rei.MinelabsClientReiPlugin"
     ]
   },
   "mixins": [

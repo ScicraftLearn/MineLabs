@@ -8,8 +8,16 @@
       {"key":  "S2", "atom":  "S"}
     ],
     "bonds": [
-      {"from": "S1", "to": "C1", "bondOrder": 1},
-      {"from": "S2", "to": "C1", "bondOrder": 1}
+      {
+        "from": "S1",
+        "to": "C1",
+        "bondOrder": 2
+      },
+      {
+        "from": "S2",
+        "to": "C1",
+        "bondOrder": 2
+      }
     ]
   },
   "result": {

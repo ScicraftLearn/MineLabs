@@ -34,6 +34,7 @@ public class MoleculeRecipeJsonFormat {
         if (container == null)
             container = true;
         if (time == null)
+            // IN TICKS
             time = 23;
     }
 

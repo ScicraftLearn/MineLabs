@@ -35,6 +35,7 @@ public class IonicRecipe implements Recipe<IonicInventory> {
 
 
     IonicRecipe(JsonObject leftjson, int leftdensity, int leftCharge, JsonObject rightjson, int rightdensity, int rightCharge, ItemStack output, Identifier id) {
+        // TODO rework ? + time and container loading
         MoleculeGraphJsonFormat leftGraph = new Gson().fromJson(leftjson, MoleculeGraphJsonFormat.class);
         this.leftMolecule = new PartialMolecule(leftGraph.get());
 
