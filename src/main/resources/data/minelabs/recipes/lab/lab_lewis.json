@@ -1,0 +1,16 @@
+{
+  "group": "lab_blocks",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minelabs:lab_blocks"
+    },
+    {
+      "item": "minelabs:lewis_block"
+    }
+  ],
+  "result": {
+    "item": "minelabs:lab/lab_lewis",
+    "count": 1
+  }
+}

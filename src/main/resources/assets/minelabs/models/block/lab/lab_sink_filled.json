@@ -1,911 +1,202 @@
 {
-  "credit": "Made with Blockbench",
-  "texture_size": [
-    64,
-    64
-  ],
-  "textures": {
-    "2": "minelabs:block/sink",
-    "particle": "minelabs:block/sink",
-    "content": "minecraft:block/water_still"
-  },
-  "elements": [
-    {
-      "name": "sink top west",
-      "from": [
-        0,
-        13,
-        3
-      ],
-      "to": [
-        2,
-        14,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.75,
-            3.25,
-            9.25,
-            3.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            4.75,
-            7,
-            7.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            8.75,
-            3.25,
-            9.25,
-            3.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.75
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            8.75,
-            7.25,
-            8.25,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            9.25,
-            3.25,
-            8.75,
-            7.25
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink top east",
-      "from": [
-        14,
-        13,
-        3
-      ],
-      "to": [
-        16,
-        14,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.75,
-            3.25,
-            9.25,
-            3.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.5
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            8.75,
-            3.25,
-            9.25,
-            3.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            5,
-            7,
-            7.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            8.75,
-            7.25,
-            8.25,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            9.25,
-            3.25,
-            8.75,
-            7.25
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink top north",
-      "from": [
-        0,
-        13,
-        0
-      ],
-      "to": [
-        16,
-        14,
-        3
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            5.5,
-            7,
-            6.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            4.25,
-            7,
-            8.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            4.75,
-            7,
-            5.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            4.25,
-            8,
-            8.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            8.25,
-            8.5,
-            4.25,
-            7.75
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink top south",
-      "from": [
-        0,
-        13,
-        13
-      ],
-      "to": [
-        16,
-        14,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            4.25,
-            7,
-            8.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            4.75,
-            7,
-            5.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            4.75,
-            7,
-            5.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            4.25,
-            8,
-            8.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            8.25,
-            8.75,
-            4.25,
-            8
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "top edge",
-      "from": [
-        0,
-        14,
-        15
-      ],
-      "to": [
-        16,
-        15,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            6.25,
-            7,
-            6.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            4.25,
-            7.25,
-            8.25,
-            7.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            6.25,
-            7,
-            6.5,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            8.25,
-            7.5,
-            4.25,
-            7.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            8.25,
-            8.5,
-            4.25,
-            8.75
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink base west",
-      "from": [
-        0,
-        0,
-        1
-      ],
-      "to": [
-        2,
-        13,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            3.75,
-            3.25,
-            4.25,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            3.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            3.75,
-            3.25,
-            4.25,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            0,
-            3.25,
-            3.75,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            9.25,
-            7.25,
-            8.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            8.25,
-            3.25,
-            7.75,
-            7
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink base east",
-      "from": [
-        14,
-        0,
-        1
-      ],
-      "to": [
-        16,
-        13,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            3.75,
-            3.25,
-            4.25,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            0,
-            3.25,
-            3.75,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            3.75,
-            3.25,
-            4.25,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            3.75,
-            0,
-            0,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            9.25,
-            7.25,
-            8.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            4.75,
-            3.25,
-            4.25,
-            7
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink base north",
-      "from": [
-        2,
-        0,
-        1
-      ],
-      "to": [
-        14,
-        13,
-        3
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            3.25,
-            3,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            9,
-            3.25,
-            9.5,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            6.75,
-            0,
-            9.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            9,
-            3.25,
-            9.5,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            9.75,
-            2,
-            6.75,
-            1.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            7.75,
-            3.25,
-            4.75,
-            3.75
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink base south",
-      "from": [
-        2,
-        0,
-        13
-      ],
-      "to": [
-        14,
-        13,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            6.75,
-            0,
-            9.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            8.75,
-            3.25,
-            9.5,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            0,
-            3.25,
-            3,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            8.75,
-            3.25,
-            9.5,
-            6.5
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            9.75,
-            2,
-            6.75,
-            1.25
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            7.75,
-            6.25,
-            4.75,
-            7
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "sink base center",
-      "from": [
-        2,
-        0,
-        3
-      ],
-      "to": [
-        14,
-        9,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            6.75,
-            1,
-            9.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            0.75,
-            1,
-            3.25,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            6.75,
-            1,
-            9.75,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            0.75,
-            1,
-            3.25,
-            3.25
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            6.75,
-            2.5,
-            3.75,
-            0
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            7.75,
-            3.75,
-            4.75,
-            6.25
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "cabin door",
-      "from": [
-        2,
-        2,
-        0
-      ],
-      "to": [
-        14,
-        11,
-        1
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            6.5,
-            3,
-            8.75
-          ],
-          "texture": "#2"
-        },
-        "east": {
-          "uv": [
-            0.25,
-            3.5,
-            0.5,
-            5.75
-          ],
-          "texture": "#2"
-        },
-        "south": {
-          "uv": [
-            0.5,
-            3.75,
-            3.5,
-            6
-          ],
-          "texture": "#2"
-        },
-        "west": {
-          "uv": [
-            0,
-            3.5,
-            0.25,
-            5.75
-          ],
-          "texture": "#2"
-        },
-        "up": {
-          "uv": [
-            3.5,
-            3.75,
-            0.5,
-            3.5
-          ],
-          "texture": "#2"
-        },
-        "down": {
-          "uv": [
-            3.5,
-            3.5,
-            0.5,
-            3.75
-          ],
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "from": [ 2, 9, 3 ],
-      "to": [ 14, 13, 13 ],
-      "faces": {
-        "up": { "texture": "#content", "tintindex": 0 }
-      }
-    }
-  ],
-  "display": {
-    "thirdperson_righthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "translation": [
-        0,
-        1.5,
-        0
-      ],
-      "scale": [
-        0.25,
-        0.25,
-        0.25
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "translation": [
-        0,
-        1.5,
-        0
-      ],
-      "scale": [
-        0.25,
-        0.25,
-        0.25
-      ]
-    },
-    "firstperson_righthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "translation": [
-        0,
-        1.5,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "firstperson_lefthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "translation": [
-        0,
-        1.5,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "ground": {
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
-    },
-    "gui": {
-      "rotation": [
-        14,
-        145,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "head": {
-      "translation": [
-        0,
-        1.5,
-        0
-      ]
-    }
-  },
-  "groups": [
-    {
-      "name": "sink top",
-      "origin": [
-        0,
-        0,
-        0
-      ],
-      "color": 0,
-      "children": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "name": "sink base",
-      "origin": [
-        0,
-        0,
-        0
-      ],
-      "color": 0,
-      "children": [
-        5,
-        6,
-        7,
-        8,
-        9
-      ]
-    },
-    10
-  ]
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "minelabs:block/lab_blocks",
+		"2": "minelabs:block/towel",
+		"particle": "block/quartz_block_side",
+		"content": "block/water_still"
+	},
+	"elements": [
+		{
+			"name": "water",
+			"from": [2, 9, 3],
+			"to": [14, 13, 13],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#content", "tintindex": 1}
+			}
+		},
+		{
+			"name": "sink top west",
+			"from": [0, 13, 3],
+			"to": [2, 14, 13],
+			"faces": {
+				"north": {"uv": [8.75, 3.25, 9.25, 3.5], "texture": "#missing"},
+				"east": {"uv": [0.5, 1.5, 1, 6.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [8.75, 3.25, 9.25, 3.5], "texture": "#missing"},
+				"west": {"uv": [0, 1.5, 0.5, 6.5], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [0, 1.5, 1, 6.5], "texture": "#1"},
+				"down": {"uv": [9.25, 3.25, 8.75, 7.25], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "sink top east",
+			"from": [14, 13, 3],
+			"to": [16, 14, 13],
+			"faces": {
+				"north": {"uv": [8.75, 3.25, 9.25, 3.5], "texture": "#missing"},
+				"east": {"uv": [7.5, 1.5, 8, 6.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [8.75, 3.25, 9.25, 3.5], "texture": "#missing"},
+				"west": {"uv": [7, 1.5, 7.5, 6.5], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [7, 1.5, 8, 6.5], "texture": "#1"},
+				"down": {"uv": [9.25, 3.25, 8.75, 7.25], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "sink top north",
+			"from": [0, 13, 0],
+			"to": [16, 14, 3],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 0.5], "rotation": 180, "texture": "#1"},
+				"east": {"uv": [7.5, 0, 8, 1.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 1, 8, 1.5], "texture": "#1"},
+				"west": {"uv": [0, 0, 0.5, 1.5], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [0, 0, 8, 1.5], "texture": "#1"},
+				"down": {"uv": [0, 6.5, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "sink top south",
+			"from": [0, 13, 13],
+			"to": [16, 14, 16],
+			"faces": {
+				"north": {"uv": [0, 6.5, 8, 7], "rotation": 180, "texture": "#1"},
+				"east": {"uv": [0, 6.5, 0.5, 8], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 7.5, 8, 8], "texture": "#1"},
+				"west": {"uv": [7.5, 6.5, 8, 8], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [0, 6.5, 8, 8], "texture": "#1"},
+				"down": {"uv": [8.25, 8.75, 4.25, 8], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "top edge",
+			"from": [0, 14, 15],
+			"to": [16, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 7.5, 8, 8], "texture": "#1"},
+				"east": {"uv": [0, 0, 0.5, 0.5], "texture": "#1"},
+				"south": {"uv": [0, 0, 8, 0.5], "texture": "#1"},
+				"west": {"uv": [0, 0, 0.5, 0.5], "texture": "#1"},
+				"up": {"uv": [0, 0, 8, 0.5], "texture": "#1"},
+				"down": {"uv": [8.25, 8.5, 4.25, 8.75], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "sink base west",
+			"from": [0, 0, 1],
+			"to": [2, 13, 16],
+			"faces": {
+				"north": {"uv": [6.5, 8.5, 7.5, 15], "texture": "#1"},
+				"east": {"uv": [7.5, 0, 15, 6.5], "texture": "#1"},
+				"south": {"uv": [0, 8.5, 1, 15], "texture": "#1"},
+				"west": {"uv": [0, 8.5, 7.5, 15], "texture": "#1"},
+				"up": {"uv": [9.25, 7.25, 8.75, 3.25], "texture": "#missing"},
+				"down": {"uv": [0, 8.5, 1, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "sink base east",
+			"from": [14, 0, 1],
+			"to": [16, 13, 16],
+			"faces": {
+				"north": {"uv": [0, 8.5, 1, 15], "texture": "#1"},
+				"east": {"uv": [0, 8.5, 7.5, 15], "texture": "#1"},
+				"south": {"uv": [6.5, 8.5, 7.5, 15], "texture": "#1"},
+				"west": {"uv": [8, 0, 15.5, 6.5], "texture": "#1"},
+				"up": {"uv": [9.25, 7.25, 8.75, 3.25], "texture": "#missing"},
+				"down": {"uv": [6.5, 8.5, 7.5, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "sink base north",
+			"from": [2, 0, 1],
+			"to": [14, 13, 3],
+			"faces": {
+				"north": {"uv": [2, 1, 14, 14], "texture": "#2"},
+				"east": {"uv": [9, 3.25, 9.5, 6.5], "texture": "#missing"},
+				"south": {"uv": [8.5, 0, 14.5, 6.5], "texture": "#1"},
+				"west": {"uv": [9, 3.25, 9.5, 6.5], "texture": "#missing"},
+				"up": {"uv": [9.75, 2, 6.75, 1.25], "texture": "#missing"},
+				"down": {"uv": [1, 15, 7, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "sink base south",
+			"from": [2, 0, 13],
+			"to": [14, 13, 16],
+			"faces": {
+				"north": {"uv": [8.5, 0, 14.5, 6.5], "texture": "#1"},
+				"east": {"uv": [8.75, 3.25, 9.5, 6.5], "texture": "#missing"},
+				"south": {"uv": [1, 8.5, 7, 15], "texture": "#1"},
+				"west": {"uv": [8.75, 3.25, 9.5, 6.5], "texture": "#missing"},
+				"up": {"uv": [9.75, 2, 6.75, 1.25], "texture": "#missing"},
+				"down": {"uv": [1, 8.5, 7, 10], "texture": "#1"}
+			}
+		},
+		{
+			"name": "sink base center",
+			"from": [2, 0, 3],
+			"to": [14, 9, 13],
+			"faces": {
+				"north": {"uv": [6.75, 1, 9.75, 3.25], "texture": "#missing"},
+				"east": {"uv": [0.75, 1, 3.25, 3.25], "texture": "#missing"},
+				"south": {"uv": [6.75, 1, 9.75, 3.25], "texture": "#missing"},
+				"west": {"uv": [0.75, 1, 3.25, 3.25], "texture": "#missing"},
+				"up": {"uv": [8.5, 0, 14.5, 5], "texture": "#1"},
+				"down": {"uv": [1, 10, 7, 15], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1.5, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1.5, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 1.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [14, 145, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"head": {
+			"translation": [0, 1.5, 0]
+		}
+	},
+	"groups": [
+		0,
+		{
+			"name": "sink top",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [1, 2, 3, 4, 5]
+		},
+		{
+			"name": "sink base",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [6, 7, 8, 9, 10]
+		},
+		{
+			"name": "sink top",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": []
+		}
+	]
 }

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "minelabs:block/quantumfield/neutrino_quantumfield" }
+        "": { "model": "minelabs:block/quantumfield/neutrino_quantumfield/alpha_transform" }
     }
 }

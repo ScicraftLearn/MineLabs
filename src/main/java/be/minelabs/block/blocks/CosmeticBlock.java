@@ -58,14 +58,14 @@ public abstract class CosmeticBlock extends Block {
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (direction == Direction.DOWN){
+        if (direction == Direction.DOWN) {
             return state.with(COUNTER, getBase(neighborState.getBlock()));
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
 
-    protected float getYOffset(@NotNull BlockState state){
+    protected float getYOffset(@NotNull BlockState state) {
         return switch (state.get(COUNTER)) {
             case 1 -> 0.0625f;
             case 2 -> 0.125f;
@@ -73,13 +73,13 @@ public abstract class CosmeticBlock extends Block {
         };
     }
 
-    protected int getBase(@NotNull World world, BlockPos pos){
+    protected int getBase(@NotNull World world, BlockPos pos) {
         return getBase(world.getBlockState(pos).getBlock());
     }
 
-    private int getBase(Block block){
+    private int getBase(Block block) {
         int base = 0;
-        if (block instanceof LabBlock) {
+        if (block instanceof LabBlock || block instanceof LabLewisBlock) {
             base = 2;
         } else if (block instanceof LabCenterBlock) {
             base = 1;

@@ -19,7 +19,6 @@ public class LabChestScreen extends HandledScreen<LabChestScreenHandler> {
 
     public LabChestScreen(LabChestScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
     }
 
     @Override

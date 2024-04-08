@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "minelabs:block/quantumfield/weak_boson_quantumfield" }
+        "": { "model": "minelabs:block/quantumfield/weak_boson_quantumfield/alpha_transform" }
     }
 }

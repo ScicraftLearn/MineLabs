@@ -478,6 +478,13 @@ public class BohrBlueprintEntity extends Entity {
 
         nbt.putFloat("electronEjectProgress", electronEjectProgress);
         nbt.putFloat("integrity", getIntegrity());
+
+        // The following information is not needed to encode the state and should not be read directly.
+        // It is merely present to facilitate interactions with commands.
+        getAtomConfig().getSymbol().ifPresent(symbol -> nbt.putString("atom", symbol));
+        nbt.putInt("protons", getProtons());
+        nbt.putInt("neutrons", getNeutrons());
+        nbt.putInt("electrons", getElectrons());
     }
 
     @Override

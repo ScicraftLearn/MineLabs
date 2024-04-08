@@ -9,7 +9,7 @@
   "key": {
     "g": [
       {
-        "item": "minecraft:light_blue_terracotta"
+        "item": "minecraft:smooth_stone_slab"
       }
     ],
     "h": [
@@ -18,7 +18,7 @@
       }
     ],
     "w": {
-      "item": "minecraft:white_concrete"
+      "tag": "minecraft:quartz_block"
     }
   },
   "result": {

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minelabs:lab/lab_cabin",
+    "minelabs:lab/lab_drawer",
+    "minelabs:lab/lab_corner",
+    "minelabs:lab/lab_center"
+  ]
+}

@@ -22,6 +22,7 @@ public class ItemGroups {
                 entries.add(new ItemStack(Items.LAB_CABIN));
                 entries.add(new ItemStack(Items.LAB_DRAWER));
                 entries.add(new ItemStack(Items.LAB_SINK));
+                entries.add(new ItemStack(Items.LAB_LEWIS));
                 entries.add(new ItemStack(Items.LAB_CENTER));
                 entries.add(new ItemStack(Items.LAB_CORNER));
                 entries.add(new ItemStack(Items.MICROSCOPE));
