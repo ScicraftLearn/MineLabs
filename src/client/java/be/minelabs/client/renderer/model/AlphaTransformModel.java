@@ -1,14 +1,12 @@
 package be.minelabs.client.renderer.model;
 
-import be.minelabs.Minelabs;
 import be.minelabs.block.blocks.QuantumfieldBlock;
-import net.fabricmc.fabric.api.renderer.v1.Renderer;
+import be.minelabs.state.property.Properties;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
-import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachedBlockView;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelOverrideList;
@@ -76,9 +74,13 @@ public class AlphaTransformModel implements UnbakedModel {
         @Override
         public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
             if (state.getBlock() instanceof QuantumfieldBlock){
-                float ageRatio = (float) QuantumfieldBlock.getAge(state) / QuantumfieldBlock.MAX_AGE;
-                float alpha = 0.2f * computeAlpha(ageRatio);
-                context.pushTransform(new AlphaTranform(alpha));
+                float alpha = 0.8f;
+                if(state.get(Properties.CLOUD)) {
+                    float ageRatio = (float) QuantumfieldBlock.getAge(state) / QuantumfieldBlock.MAX_AGE;
+                    alpha = 0.2f * computeAlpha(ageRatio);
+                }
+
+                context.pushTransform(new AlphaTransform(alpha));
                 context.bakedModelConsumer().accept(baseModel, state);
                 context.popTransform();
                 return;
@@ -131,12 +133,12 @@ public class AlphaTransformModel implements UnbakedModel {
             return baseModel.getOverrides();
         }
 
-        private static class AlphaTranform implements RenderContext.QuadTransform {
+        private static class AlphaTransform implements RenderContext.QuadTransform {
 
             private final float alpha;
             private static final RenderMaterial MATERIAL = RendererAccess.INSTANCE.getRenderer().materialFinder().emissive(0, true).find();
 
-            protected AlphaTranform(float alpha) {
+            protected AlphaTransform(float alpha) {
                 this.alpha = alpha;
             }
 

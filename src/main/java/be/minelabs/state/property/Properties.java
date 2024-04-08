@@ -8,6 +8,7 @@ import net.minecraft.state.property.IntProperty;
 public class Properties {
     //public static final EnumProperty<BohrPart> BOHR_PART = EnumProperty.of("part", BohrPart.class);
     public static final BooleanProperty MASTER = BooleanProperty.of("master");
+    public static final BooleanProperty CLOUD = BooleanProperty.of("cloud");
     public static final IntProperty FIRE_COLOR = IntProperty.of("fire_color", 0, 10);
 
     public static final BooleanProperty ZOOMED = BooleanProperty.of("zoom");

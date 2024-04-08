@@ -1,0 +1,12 @@
+{
+  "group":"quarks",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minelabs:subatomic/weak_boson" },
+    { "item": "minelabs:subatomic/neutrino" }
+  ],
+  "result": {
+    "item": "minelabs:subatomic/electron",
+    "count": 1
+  }
+}

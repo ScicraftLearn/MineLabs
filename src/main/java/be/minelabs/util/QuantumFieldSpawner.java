@@ -1,6 +1,7 @@
 package be.minelabs.util;
 
 import be.minelabs.block.Blocks;
+import be.minelabs.block.blocks.QuantumfieldBlock;
 import be.minelabs.block.entity.QuantumFieldBlockEntity;
 import be.minelabs.state.property.Properties;
 import com.google.common.collect.Lists;
@@ -64,13 +65,13 @@ public class QuantumFieldSpawner {
         int type = world.random.nextInt(7);
         //Only change air blocks so other fields don't get replaced
         switch (type) {
-            case 0 -> quantumfield = Blocks.ELECTRON_QUANTUMFIELD.getDefaultState();
-            case 1 -> quantumfield = Blocks.DOWNQUARK_QUANTUMFIELD.getDefaultState();
-            case 2 -> quantumfield = Blocks.GLUON_QUANTUMFIELD.getDefaultState();
-            case 3 -> quantumfield = Blocks.PHOTON_QUANTUMFIELD.getDefaultState();
-            case 4 -> quantumfield = Blocks.UPQUARK_QUANTUMFIELD.getDefaultState();
-            case 5 -> quantumfield = Blocks.WEAK_BOSON_QUANTUMFIELD.getDefaultState();
-            case 6 -> quantumfield = Blocks.NEUTRINO_QUANTUMFIELD.getDefaultState();
+            case 0 -> quantumfield = Blocks.ELECTRON_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 1 -> quantumfield = Blocks.DOWNQUARK_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 2 -> quantumfield = Blocks.GLUON_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 3 -> quantumfield = Blocks.PHOTON_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 4 -> quantumfield = Blocks.UPQUARK_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 5 -> quantumfield = Blocks.WEAK_BOSON_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
+            case 6 -> quantumfield = Blocks.NEUTRINO_QUANTUMFIELD.getDefaultState().with(QuantumfieldBlock.CLOUD, true);
         }
         return quantumfield;
     }

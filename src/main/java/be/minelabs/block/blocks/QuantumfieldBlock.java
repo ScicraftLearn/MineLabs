@@ -1,24 +1,20 @@
 package be.minelabs.block.blocks;
 
-import be.minelabs.Minelabs;
 import be.minelabs.block.Blocks;
 import be.minelabs.block.entity.QuantumFieldBlockEntity;
-import be.minelabs.item.Items;
 import be.minelabs.state.property.Properties;
-import be.minelabs.world.MinelabsGameRules;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -28,7 +24,6 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class QuantumfieldBlock extends TransparentBlock implements BlockEntityProvider {
     public static final int MAX_AGE = 10;
@@ -36,6 +31,8 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
 
     public static final BooleanProperty MASTER = Properties.MASTER;
     public static final IntProperty AGE = IntProperty.of("age", 0, MAX_AGE);
+    // If block is part of a cloud (determines rendering)
+    public static final BooleanProperty CLOUD = Properties.CLOUD;
 
     public QuantumfieldBlock() {
         // Properties of all quantumfield blocks
@@ -51,8 +48,15 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
                         .ticksRandomly()
                         .emissiveLighting((state, world, pos) -> true)
         );
-        this.setDefaultState(getDefaultState().with(AGE, 0).with(MASTER, false));
+        this.setDefaultState(getDefaultState().with(AGE, 0).with(MASTER, false).with(CLOUD, true));
 
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        // Quantum fields placed by the player are not clouds
+        return super.getPlacementState(ctx).with(CLOUD, false);
     }
 
     @Override
@@ -116,7 +120,7 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(AGE, MASTER);
+        builder.add(AGE, MASTER, CLOUD);
     }
 
     public void removeQuantumBlockIfNeeded(BlockState state, ServerWorld world, BlockPos pos) {

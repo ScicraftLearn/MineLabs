@@ -11,6 +11,7 @@ import be.minelabs.world.MinelabsGameRules;
 import net.minecraft.entity.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
@@ -96,6 +97,7 @@ public class ParticleEntity extends ChargedEntity {
     public void onChargedEntityHit(ChargedEntity entity) {
         if (data.getAntiItem() != null && entity.getItem().isOf(data.getAntiItem())) {
             ItemScatterer.spawn(getWorld(), getX(), getY(), getZ(), getAnnihilationStack());
+            ((ServerWorld) world).spawnParticles(ParticleTypes.FLASH, getX(), getY()+0.4f, getZ(), 1, 0f, 0f,0f, 0f);
             Criteria.COULOMB_FORCE_CRITERION.trigger((ServerWorld) world, getBlockPos(), 5,
                     (condition) -> condition.test(CoulombCriterion.Type.ANNIHILATE));
             playSound(SoundEvents.COULOMB_ANNIHILATE, 1f, 1f);
