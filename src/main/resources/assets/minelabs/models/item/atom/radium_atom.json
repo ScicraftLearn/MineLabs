@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minelabs:item/atom_grey",
+    "layer0": "minelabs:item/atom_darkgreen",
     "layer1": "minelabs:item/radium",
     "layer2": "minelabs:item/electrons2"
   }

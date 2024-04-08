@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -48,9 +49,11 @@ public class MoleculeRecipe implements Recipe<LewisCraftingGrid> {
         return true;
     }
 
-    public Integer getDensity() {return density;}
+    public Integer getDensity() {
+        return density;
+    }
 
-    public Molecule getMolecule(){
+    public Molecule getMolecule() {
         return molecule;
     }
 
@@ -58,7 +61,7 @@ public class MoleculeRecipe implements Recipe<LewisCraftingGrid> {
         return container;
     }
 
-    public Integer getTime(){
+    public Integer getTime() {
         return this.time;
     }
 
@@ -74,6 +77,21 @@ public class MoleculeRecipe implements Recipe<LewisCraftingGrid> {
     @Override
     public DefaultedList<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    public int getRequiredAmount(int index) {
+        return index <= ingredients.size() && index >= 0 ? getRequiredAmount(ingredients.get(index)) : 0;
+    }
+
+    public int getRequiredAmount(Ingredient ingredient) {
+        ItemStack stack = ingredient.getMatchingStacks()[0];
+        int amount = 0;
+        for (Ingredient ingred : ingredients) {
+            if (ingred.test(stack)) {
+                amount += 8;
+            }
+        }
+        return amount;
     }
 
     @Override
@@ -96,7 +114,7 @@ public class MoleculeRecipe implements Recipe<LewisCraftingGrid> {
         return id;
     }
 
-    public JsonObject getJson(){
+    public JsonObject getJson() {
         return json;
     }
 

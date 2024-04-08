@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "whw",
+    "www"
+  ],
+  "key": {
+    "g": [
+      {
+        "item": "minecraft:smooth_stone_slab"
+      }
+    ],
+    "h": [
+      {
+        "item": "minelabs:atom_pack"
+      }
+    ],
+    "w": {
+      "tag": "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "item": "minelabs:atomic_storage",
+    "count": 1
+  }
+}

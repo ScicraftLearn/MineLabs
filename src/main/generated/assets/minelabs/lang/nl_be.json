@@ -1,6 +1,7 @@
 {
   "block.minelabs.animated_charged": "",
   "block.minelabs.atomic_floor": "",
+  "block.minelabs.atomic_storage": "Atoom Opslag",
   "block.minelabs.bohr_block": "Bohr Blauwdruk",
   "block.minelabs.charged_placeholder": "",
   "block.minelabs.charged_point": "Puntlading",
@@ -181,6 +182,7 @@
   "item.minelabs.atom.yttrium_atom": "Yttrium",
   "item.minelabs.atom.zinc_atom": "Zink",
   "item.minelabs.atom.zirconium_atom": "Zirkonium",
+  "item.minelabs.atom_pack": "Atom pak",
   "item.minelabs.balloon": "Ballon",
   "item.minelabs.bond": "",
   "item.minelabs.charged_point": "Puntlading",
@@ -330,6 +332,7 @@
   "text.minelabs.anti_quark.color.red": "Kleur: Anti-Rood",
   "text.minelabs.anti_quark.electric_down": "Lading: +1/3",
   "text.minelabs.anti_quark.electric_up": "Lading: -2/3",
+  "text.minelabs.atomic_storage": "Open Atoom Opslag",
   "text.minelabs.clear_grid": "Rooster leegmagen",
   "text.minelabs.clear_slots": "Invoer leegmaken",
   "text.minelabs.inactive": "Inactief",
@@ -342,6 +345,7 @@
   "text.minelabs.quark.color.red": "Kleur: Rood",
   "text.minelabs.quark.electric_down": "Lading: -1/3",
   "text.minelabs.quark.electric_up": "Lading: +2/3",
+  "text.minelabs.return": "Terug naar de Inventaris",
   "text.minelabs.toggle_instruction": "Shift Klik met de rechtermuisknop om te wisselen",
   "text.minelabs.valid": "Correcte Molecule"
 }

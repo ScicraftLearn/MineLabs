@@ -21,6 +21,8 @@ public class BlockEntities {
 
     public static BlockEntityType<MologramBlockEntity> MOLOGRAM_BLOCK_ENTITY;
 
+    public static BlockEntityType<AtomicStorageBlockEntity> ATOMIC_STORAGE_BLOCK_ENTITY;
+
 
     static {
         IONIC_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(Minelabs.MOD_ID, "ionic_block"),
@@ -51,6 +53,9 @@ public class BlockEntities {
 
         ERLENMEYER_STAND_BLOCK_ENTITY = register(FabricBlockEntityTypeBuilder.create(ErlenmeyerBlockEntity::new,
                 Blocks.ERLENMEYER_STAND).build(), "erlenmeyer_stand_block_entity");
+
+        ATOMIC_STORAGE_BLOCK_ENTITY = register(FabricBlockEntityTypeBuilder.create(AtomicStorageBlockEntity::new,
+                Blocks.ATOMIC_STORAGE).build(null), "atomic_storage_block_entity");
     }
 
     /**

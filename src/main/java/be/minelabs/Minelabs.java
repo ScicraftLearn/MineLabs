@@ -22,7 +22,6 @@ import net.minecraft.resource.ResourceType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class Minelabs implements ModInitializer {
 
     public static final String MOD_ID = "minelabs";

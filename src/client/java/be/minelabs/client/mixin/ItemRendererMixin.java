@@ -1,7 +1,9 @@
 package be.minelabs.client.mixin;
 
 import be.minelabs.Minelabs;
+import be.minelabs.client.hooks.ItemRendererHook;
 import be.minelabs.item.Items;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
@@ -10,8 +12,11 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
@@ -27,4 +32,14 @@ public abstract class ItemRendererMixin {
         }
         return value;
     }
+
+    @Unique
+    @Inject(method = "renderGuiItemOverlay(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At(value = "HEAD"), cancellable = true)
+    public void injectRenderGuiItemOverlay(MatrixStack matrices, TextRenderer textRenderer, ItemStack stack, int x, int y, String countLabel, CallbackInfo ci) {
+        if (ItemRendererHook.renderGuiItemOverlay((ItemRenderer) (Object) this, matrices, stack, x, y)) {
+            ci.cancel();
+        }
+    }
+
+
 }

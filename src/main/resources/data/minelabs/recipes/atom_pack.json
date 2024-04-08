@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "ACA",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "minelabs:atom_pack",
+    "count": 1
+  }
+}

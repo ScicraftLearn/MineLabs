@@ -1,6 +1,7 @@
 {
   "block.minelabs.animated_charged": "",
   "block.minelabs.atomic_floor": "",
+  "block.minelabs.atomic_storage": "Atomic Storage",
   "block.minelabs.bohr_block": "Bohr Blueprint",
   "block.minelabs.charged_placeholder": "",
   "block.minelabs.charged_point": "Point Charge",
@@ -181,6 +182,7 @@
   "item.minelabs.atom.yttrium_atom": "Yttrium",
   "item.minelabs.atom.zinc_atom": "Zinc",
   "item.minelabs.atom.zirconium_atom": "Zirconium",
+  "item.minelabs.atom_pack": "Atom pack",
   "item.minelabs.balloon": "Balloon",
   "item.minelabs.bond": "",
   "item.minelabs.charged_point": "Point Charge",
@@ -330,6 +332,7 @@
   "text.minelabs.anti_quark.color.red": "Color: Anti-Red",
   "text.minelabs.anti_quark.electric_down": "Charge: +1/3",
   "text.minelabs.anti_quark.electric_up": "Charge: -2/3",
+  "text.minelabs.atomic_storage": "Open Atomic Storage",
   "text.minelabs.clear_grid": "Clear Grid",
   "text.minelabs.clear_slots": "Clear Input Slots",
   "text.minelabs.inactive": "Inactive",
@@ -342,6 +345,7 @@
   "text.minelabs.quark.color.red": "Color: Red",
   "text.minelabs.quark.electric_down": "Charge: -1/3",
   "text.minelabs.quark.electric_up": "Charge: +2/3",
+  "text.minelabs.return": "Return to Inventory",
   "text.minelabs.toggle_instruction": "Shift + Right click to toggle",
   "text.minelabs.valid": "Correct Molecule"
 }

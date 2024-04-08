@@ -89,6 +89,8 @@ public class Blocks {
     public static final Block LEWIS_BLOCK = register(new LewisBlock(FabricBlockSettings.of(Material.METAL).nonOpaque()), "lewis_block");
     public static final Block IONIC_BLOCK = register(new IonicBlock(FabricBlockSettings.of(Material.METAL).nonOpaque()), "ionic_block");
 
+    public static final Block ATOMIC_STORAGE = register(new AtomicStorageBlock(FabricBlockSettings.of(Material.STONE)
+            .mapColor(MapColor.GRAY).dynamicBounds().strength(2.0F).requiresTool()), "atomic_storage");
     public static final Block HNO3 = register(new ChemicalFluidBlock(Fluids.STILL_HNO3, Molecule.HNO3), "chemical/hno3");
     public static final Block H2O = register(new ChemicalFluidBlock(Fluids.STILL_H2O, Molecule.H2O), "chemical/h2o");
     public static final Block CS2 = register(new ChemicalFluidBlock(Fluids.STILL_CS2, Molecule.CS2), "chemical/cs2");

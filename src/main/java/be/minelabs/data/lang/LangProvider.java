@@ -62,6 +62,8 @@ public class LangProvider extends MinelabsLangProvider {
         builder.add(Items.MAGNET, "Magnet");
         builder.add(Items.POCKET_HOLE, "Pocket Black Hole");
         builder.add(Items.FORCE_COMPASS, "Force Compass");
+        builder.add(Items.ATOM_PACK, "Atom pack");
+        builder.add(Blocks.ATOMIC_STORAGE, "Atomic Storage");
 
         builder.add(Items.ANTI_NEUTRON, "AntiNeutron");
         builder.add(Items.ANTI_PROTON, "AntiProton");

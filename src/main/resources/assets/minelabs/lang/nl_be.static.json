@@ -13,6 +13,8 @@
   "text.minelabs.toggle_instruction": "Shift Klik met de rechtermuisknop om te wisselen",
   "text.minelabs.clear_slots": "Invoer leegmaken",
   "text.minelabs.clear_grid": "Rooster leegmagen",
+  "text.minelabs.atomic_storage": "Open Atoom Opslag",
+  "text.minelabs.return": "Terug naar de Inventaris",
   "text.minelabs.anti_quark.electric_down": "Lading: +1/3",
   "text.minelabs.anti_quark.electric_up": "Lading: -2/3",
   "text.minelabs.quark.electric_down":"Lading: -1/3",
