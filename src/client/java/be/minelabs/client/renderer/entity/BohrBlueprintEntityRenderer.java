@@ -189,6 +189,11 @@ public class BohrBlueprintEntityRenderer extends EntityRenderer<BohrBlueprintEnt
 
         float radius = ELECTRON_FIRST_SHELL_RADIUS;
 
+        matrices.push();
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(45));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45));
+
         for (int i = 0; i < electronShellConfiguration.length; i++) {
             int electronsInShell = electronShellConfiguration[i];
             Quaternionf rotation = ELECTRON_SHELL_ROTATIONS[i];
@@ -207,6 +212,7 @@ public class BohrBlueprintEntityRenderer extends EntityRenderer<BohrBlueprintEnt
 
             radius += ELECTRON_SHELL_RADIUS_OFFSET;
         }
+        matrices.pop();
     }
 
     /**
