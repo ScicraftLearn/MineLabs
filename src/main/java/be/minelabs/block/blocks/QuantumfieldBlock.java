@@ -1,8 +1,10 @@
 package be.minelabs.block.blocks;
 
+import be.minelabs.Minelabs;
 import be.minelabs.block.Blocks;
 import be.minelabs.block.entity.QuantumFieldBlockEntity;
 import be.minelabs.state.property.Properties;
+import be.minelabs.world.dimension.ModDimensions;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -123,16 +125,16 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
         builder.add(AGE, MASTER, CLOUD);
     }
 
-    public void removeQuantumBlockIfNeeded(BlockState state, ServerWorld world, BlockPos pos) {
-        if (MAX_AGE == getAge(state)) {
-            world.removeBlock(pos, false);
-        }
-    }
-
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         removeQuantumBlockIfNeeded(state, world, pos);
         super.scheduledTick(state, world, pos, random);
+    }
+
+    public void removeQuantumBlockIfNeeded(BlockState state, ServerWorld world, BlockPos pos) {
+        if (MAX_AGE == getAge(state)) {
+            world.removeBlock(pos, false);
+        }
     }
 
     @Override
@@ -147,26 +149,27 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
         super.afterBreak(world, player, pos, state, blockEntity, stack);
+
         // Place block back
         world.setBlockState(pos, state, Block.NOTIFY_ALL);
 
         shrinkField(world, pos);
     }
 
-    private Optional<BlockPos> getMasterPos(World world, BlockPos pos) {
+    private Optional<BlockPos> getMasterPos(WorldAccess world, BlockPos pos) {
         if (isMaster(world.getBlockState(pos))) return Optional.of(pos);
 
         return collectFieldBlocks(world, pos).stream().filter(p -> isMaster(world.getBlockState(p))).findFirst();
     }
 
     /**
-     * Trace field by traversing all directions and count neighbors.
+     * Trace field by traversing all directions.
      */
-    private Set<BlockPos> collectFieldBlocks(World world, BlockPos pos) {
+    private Set<BlockPos> collectFieldBlocks(WorldAccess world, BlockPos pos) {
         return collectFieldBlocks(world, pos, world.getBlockState(pos).getBlock(), new HashSet<>());
     }
 
-    private Set<BlockPos> collectFieldBlocks(World world, BlockPos pos, Block block, Set<BlockPos> visited) {
+    private Set<BlockPos> collectFieldBlocks(WorldAccess world, BlockPos pos, Block block, Set<BlockPos> visited) {
         visited.add(pos);
         for (BlockPos neighbor : Arrays.stream(DIRECTIONS).map(pos::offset).toList()) {
             if (!world.getBlockState(neighbor).isOf(block)) continue;
@@ -176,7 +179,7 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
         return visited;
     }
 
-    private void shrinkField(World world, BlockPos pos) {
+    private void shrinkField(WorldAccess world, BlockPos pos) {
         Set<BlockPos> field = collectFieldBlocks(world, pos);
 
         Optional<BlockPos> masterOpt = getMasterPos(world, pos);
@@ -196,6 +199,7 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         super.onStateReplaced(state, world, pos, newState, moved);
+
         if (state.isOf(newState.getBlock()))
             return;
 
@@ -208,7 +212,7 @@ public class QuantumfieldBlock extends TransparentBlock implements BlockEntityPr
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         // Only has collision from top
-        if (!context.isAbove(VoxelShapes.fullCube(), pos, true) || context.isDescending()) {
+        if (!context.isAbove(VoxelShapes.fullCube(), pos, true) || context.isDescending() && pos.getY() != AtomicFloor.ATOMIC_FLOOR_LAYER) {
             return VoxelShapes.empty();
         }
         return VoxelShapes.fullCube();
