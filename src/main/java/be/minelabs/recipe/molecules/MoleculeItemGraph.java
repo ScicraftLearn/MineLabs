@@ -20,12 +20,11 @@ public class MoleculeItemGraph extends MoleculeGraph {
         return vertex;
     }
 
-    public MoleculeItemGraph.Vertex getVertexOfItemStack(ItemStack stack){
+    public MoleculeItemGraph.Vertex getVertexOfItemStack(ItemStack stack) {
         return itemStackToVertex.get(stack);
     }
 
-    public ItemStack getItemStackOfVertex(MoleculeItemGraph.Vertex vertex){
+    public ItemStack getItemStackOfVertex(MoleculeItemGraph.Vertex vertex) {
         return vertexToItemStack.get(vertex);
     }
-
 }

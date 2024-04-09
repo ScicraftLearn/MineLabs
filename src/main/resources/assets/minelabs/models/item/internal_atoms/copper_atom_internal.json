@@ -2,7 +2,6 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "minelabs:item/atom_orange",
-    "layer1": "minelabs:item/copper",
-    "layer2": "minelabs:item/electrons4"
+    "layer1": "minelabs:item/copper"
   }
 }

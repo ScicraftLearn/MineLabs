@@ -6,25 +6,26 @@
       "atoms": [
         {"key":  "NA1", "atom":  "Na"}
       ],
-      "bonds": [
-      ]
+      "bonds": []
     },
+    "amount": 1,
     "density": 8,
     "charge": 1
   },
   "anion": {
-    "structure":
-    {
+    "structure": {
       "atoms": [
-        {"key":  "CL1", "atom":  "Cl"}
+        {"key": "CL1", "atom": "Cl"}
       ],
-      "bonds": [
-      ]
+      "bonds": []
     },
+    "amount": 1,
     "density": 8,
     "charge": 1
   },
   "result": {
-    "item": "minelabs:erlenmeyer/erlenmeyer_nh3"
-  }
+    "item": "minelabs:salt/salt"
+  },
+  "container": false,
+  "time": 23
 }

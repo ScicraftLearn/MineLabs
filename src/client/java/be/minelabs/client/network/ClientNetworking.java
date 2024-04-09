@@ -35,23 +35,19 @@ public class ClientNetworking {
         });
         ClientPlayNetworking.registerGlobalReceiver(NetworkingConstants.IONICDATASYNC, (c, h, buf, sender) -> {
             BlockPos pos = buf.readBlockPos();
-            int leftSize = buf.readInt();
-            DefaultedList<Ingredient> leftIngredients = DefaultedList.of();
-            if (leftSize > 0) {
-                for (int i = 0; i < leftSize; i++) {
-                    leftIngredients.add(Ingredient.fromPacket(buf));
+            int size = buf.readInt();
+            DefaultedList<Ingredient> ingredients = DefaultedList.of();
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    ingredients.add(Ingredient.fromPacket(buf));
                 }
             }
-            int rightSize = buf.readInt();
-            DefaultedList<Ingredient> rightIngredients = DefaultedList.of();
-            if (rightSize > 0) {
-                for (int i = 0; i < rightSize; i++) {
-                    rightIngredients.add(Ingredient.fromPacket(buf));
-                }
-            }
+            int split = buf.readByte();
+
             BlockEntity be = c.world.getBlockEntity(pos);
             if (be instanceof IonicBlockEntity ionic) {
-                ionic.setIngredients(leftIngredients, rightIngredients);
+                ionic.setIngredients(ingredients);
+                ionic.setSplit(split);
             }
         });
     }

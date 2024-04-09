@@ -16,7 +16,6 @@ public class PartialMolecule {
         this.structure = structure;
     }
 
-
     public MoleculeGraph getStructure(){
         return structure;
     }

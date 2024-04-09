@@ -1,5 +1,6 @@
 package be.minelabs.block.entity;
 
+import be.minelabs.Minelabs;
 import be.minelabs.network.NetworkingConstants;
 import be.minelabs.recipe.ionic.IonicInventory;
 import be.minelabs.recipe.ionic.IonicRecipe;
@@ -33,19 +34,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * IonicBlockEntity. We still implement {@link Inventory} for compat.
  */
-public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, Inventory {
+public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
 
     //The actual inventory
     private IonicInventory inventory = new IonicInventory(9, 9, 11);
     //PropertyDelegate that holds the progress, density and charge of both sides. synced to the client
     private final PropertyDelegate propertyDelegate;
-    //List of needed input left ingredients; Synced
-    private DefaultedList<Ingredient> leftIngredients = DefaultedList.of();
-    //List of needed input right ingredients; Synced
-    private DefaultedList<Ingredient> rightIngredients = DefaultedList.of();
+    //List of needed input ingredients; Synced
+    private DefaultedList<Ingredient> ingredients = DefaultedList.of();
+    private int split = 0;
     //Progress of the recipe; -1 means not started; Synced by propertyDelegate
     private int progress = 0;
     private int maxProgress = 23;
@@ -54,9 +56,14 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
     //Density (amount) of items needed for the recipe;  Also used to tell the client a recipe is found;Synced by propertyDelegate
     private int rightdensity;
     //Charge of items needed for the recipe;Synced by propertyDelegate
-    private int leftCharge;
+    private int leftCharge = 0;
     //Charge of items needed for the recipe;Synced by propertyDelegate
-    private int rightCharge;
+    private int rightCharge = 0;
+    //Amount of "partial"molecule needed for the recipe;Synced by propertyDelegate
+    private int leftAmount = 1;
+    //Amount of "partial"molecule needed for the recipe;Synced by propertyDelegate
+    private int rightAmount = 1;
+
     //Current recipe selected; NOT synced
     private IonicRecipe currentrecipe;
 
@@ -76,6 +83,8 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
                     case 3 -> IonicBlockEntity.this.leftCharge;
                     case 4 -> IonicBlockEntity.this.rightCharge;
                     case 5 -> IonicBlockEntity.this.maxProgress;
+                    case 6 -> IonicBlockEntity.this.leftAmount;
+                    case 7 -> IonicBlockEntity.this.rightAmount;
                     default -> 0;
                 };
             }
@@ -89,6 +98,8 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
                     case 3 -> IonicBlockEntity.this.leftCharge = value;
                     case 4 -> IonicBlockEntity.this.rightCharge = value;
                     case 5 -> IonicBlockEntity.this.maxProgress = value;
+                    case 6 -> IonicBlockEntity.this.leftAmount = value;
+                    case 7 -> IonicBlockEntity.this.rightAmount = value;
                     default -> {
                     }
                 }
@@ -96,7 +107,7 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
             @Override
             public int size() {
-                return 6;
+                return 8;
             }
         };
     }
@@ -115,6 +126,8 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
+        rightAmount = nbt.getByte("rightAmount");
+        leftAmount = nbt.getByte("leftAmount");
         NbtList nbtList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
         this.inventory = new IonicInventory(9, 9, 11);
         for (int i = 0; i < nbtList.size(); ++i) {
@@ -141,6 +154,8 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
             }
         }
         nbt.put("Items", nbtList);
+        nbt.putByte("leftAmount", (byte) leftAmount);
+        nbt.putByte("rightAmount", (byte) rightAmount);
     }
 
     @Override
@@ -188,13 +203,8 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     private void craft(DynamicRegistryManager manager) {
         //Remove actual ingredients
-        for (int i = 0; i < leftIngredients.size(); i++) {
-            inventory.getStack(i).decrement(leftdensity);
-        }
-
-        //Remove actual ingredients
-        for (int i = 0; i < rightIngredients.size(); i++) {
-            inventory.getStack(i).decrement(rightdensity);
+        for (int i = 0; i < ingredients.size(); i++) {
+            inventory.getIO().getStack(i).decrement(getCorrectAmount(i));
         }
 
         // Remove a container item if needed
@@ -207,17 +217,19 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     private boolean hasEnoughItems() {
-        for (int i = 0; i < leftIngredients.size(); i++) {
-            if (!leftIngredients.get(i).test(inventory.getLeftGrid().getStack(i)) || inventory.getLeftGrid().getStack(i).getCount() < leftdensity) {
-                return false; // not enough items
-            }
-        }
-        for (int i = 0; i < rightIngredients.size(); i++) {
-            if (!rightIngredients.get(i).test(inventory.getRightGrid().getStack(i)) || inventory.getRightGrid().getStack(i).getCount() < rightdensity) {
-                return false; // not enough items
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (!ingredients.get(i).test(inventory.getIO().getStack(i)) || inventory.getIO().getStack(i).getCount() < getCorrectAmount(i)) {
+                return false;
             }
         }
         return true;
+    }
+
+    public int getCorrectAmount(int index) {
+        if (index < split) {
+            return leftdensity * leftAmount;
+        }
+        return rightdensity * rightAmount;
     }
 
     private boolean containerCheck() {
@@ -241,26 +253,25 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
         this.maxProgress = 23;
         this.leftdensity = 0;
         this.rightdensity = 0;
-        this.leftCharge = 0;
-        this.rightCharge = 0;
-        this.leftIngredients = DefaultedList.of();
-        this.rightIngredients = DefaultedList.of();
+        this.ingredients = DefaultedList.of();
+        this.split = 0;
         this.markDirty();
     }
 
     public void updateRecipe() {
-        getWorld().getRecipeManager().getFirstMatch(IonicRecipe.IonicRecipeType.INSTANCE, inventory, getWorld())
-                .ifPresentOrElse(recipe -> {
+        getWorld().getRecipeManager().getAllMatches(IonicRecipe.IonicRecipeType.INSTANCE, inventory, getWorld())
+                .stream()
+                .filter(recipe -> recipe.getLeftCharge() == leftCharge && -recipe.getRightCharge() == rightCharge
+                        && recipe.getLeftAmount() == leftAmount && recipe.getRightAmount() == rightAmount)
+                .findFirst().ifPresentOrElse(recipe -> {
                     if (recipe != currentrecipe) {
                         // Different recipe
                         this.currentrecipe = recipe;
                         this.progress = 0;
-                        this.leftIngredients = recipe.getLeftingredients();
-                        this.rightIngredients = recipe.getRightingredients();
+                        this.ingredients = recipe.getIngredients();
+                        this.split = recipe.getLeftingredients().size();
                         this.leftdensity = recipe.getLeftdensity();
                         this.rightdensity = recipe.getRightdensity();
-                        this.leftCharge = recipe.getLeftCharge();
-                        this.rightCharge = recipe.getRightCharge();
                         this.maxProgress = recipe.getTime();
                         markDirty();
                         sendDataPacket();
@@ -274,14 +285,14 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
         }
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBlockPos(this.pos);
-        buf.writeInt(this.leftIngredients.size());
-        for (Ingredient ingredient : this.leftIngredients) {
+        buf.writeInt(this.currentrecipe.getIngredients().size());
+
+        for (Ingredient ingredient : this.currentrecipe.getIngredients()) {
             ingredient.write(buf);
         }
-        buf.writeInt(this.rightIngredients.size());
-        for (Ingredient ingredient : this.rightIngredients) {
-            ingredient.write(buf);
-        }
+        buf.writeByte(split);
+
+        // MIGHT have to sync Amount / Charge
 
         for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, pos)) {
             ServerPlayNetworking.send(player, NetworkingConstants.IONICDATASYNC, buf);
@@ -300,58 +311,23 @@ public class IonicBlockEntity extends BlockEntity implements ExtendedScreenHandl
         buf.writeBlockPos(this.pos);
     }
 
-    public void setIngredients(DefaultedList<Ingredient> leftIngredients, DefaultedList<Ingredient> rightIngredients) {
-        this.leftIngredients = leftIngredients;
-        this.rightIngredients = rightIngredients;
+    public void setIngredients(DefaultedList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
-    public DefaultedList<Ingredient> getLeftIngredients() {
-        return this.leftIngredients;
+    public DefaultedList<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public DefaultedList<Ingredient> getRightIngredients() {
-        return rightIngredients;
+    public Inventory getIOInventory() {
+        return inventory.getIO();
     }
 
-    //Iventory overrides, for compatibility
-
-    @Override
-    public int size() {
-        return inventory.size();
+    public int getSplit() {
+        return split;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return inventory.isEmpty();
-    }
-
-    @Override
-    public ItemStack getStack(int slot) {
-        return inventory.getStack(slot);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return inventory.removeStack(slot, amount);
-    }
-
-    @Override
-    public ItemStack removeStack(int slot) {
-        return inventory.removeStack(slot);
-    }
-
-    @Override
-    public void setStack(int slot, ItemStack stack) {
-        inventory.setStack(slot, stack);
-    }
-
-    @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return inventory.canPlayerUse(player);
-    }
-
-    @Override
-    public void clear() {
-        inventory.clear();
+    public void setSplit(int split) {
+        this.split = split;
     }
 }

@@ -91,8 +91,8 @@ public class LewisScreen extends HandledScreen<LewisBlockScreenHandler> implemen
                 }
 
                 ValenceElectrons valentieE = new ValenceElectrons(bonds,
-                        vertex.data.getInitialValenceElectrons() - vertex.getEdgesData().stream().map(bond -> bond.bondOrder).mapToInt(Integer::intValue).sum()
-                        , vertex.data.getMaxPossibleBonds() == total_bonds); //no clue: copied it from getOpenConnections in the MoleculeGraph class
+                        vertex.data.getInitialValenceElectrons() - vertex.getEdgesData().stream().map(bond -> bond.bondOrder).mapToInt(Integer::intValue).sum(),
+                        vertex.data.getMaxPossibleBonds() == total_bonds); //no clue: copied it from getOpenConnections in the MoleculeGraph class
                 for (String i : Arrays.asList("n", "e", "s", "w")) { //render item 4x: N-E-S-W
                     if (valentieE.getDirectionalValence(i) != 0) {
                         this.itemRenderer.renderInGuiWithOverrides(matrices, valentieE.getStack(i), slot.x + x, slot.y + y);
@@ -218,6 +218,4 @@ public class LewisScreen extends HandledScreen<LewisBlockScreenHandler> implemen
             default -> drawTexture(matrices, x + 105, y + 17, 176, 21, 16, 16); // INVALID
         }
     }
-
-
 }

@@ -2,7 +2,6 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "minelabs:item/atom_darkgreen",
-    "layer1": "minelabs:item/calcium",
-    "layer2": "minelabs:item/electrons2"
+    "layer1": "minelabs:item/calcium"
   }
 }

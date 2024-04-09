@@ -2,6 +2,7 @@ package be.minelabs.screen;
 
 import be.minelabs.advancement.criterion.Criteria;
 import be.minelabs.block.entity.LewisBlockEntity;
+import be.minelabs.item.items.AtomItem;
 import be.minelabs.recipe.lewis.LewisCraftingGrid;
 import be.minelabs.recipe.molecules.Bond;
 import be.minelabs.recipe.molecules.MoleculeGraph;
@@ -22,6 +23,7 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -118,7 +120,15 @@ public class LewisBlockScreenHandler extends ScreenHandler {
         // Lewis Crafting Table Inventory (5x5 grid)
         for (int m = 0; m < 5; ++m) {
             for (int l = 0; l < 5; ++l) {
-                this.addSlot(new LockableGridSlot(craftingGrid, l + m * 5, 8 + l * 18, m * 18 + 18) {//Anonymous implementation to link it to the slots.
+                this.addSlot(new LockableGridSlot(craftingGrid, l + m * 5, 8 + l * 18, m * 18 + 18, stack -> {
+                    if (stack.getItem() instanceof AtomItem atom) {
+                        return switch (atom.getAtom().getType()) {
+                            case POST_TRANSITION_METAL, NON_METAL, NOBLE_GAS -> true;
+                            default -> false;
+                        };
+                    }
+                    return false;
+                }) {//Anonymous implementation to link it to the slots.
                     @Override
                     public boolean isLocked() {
                         return !isInputEmpty(); //Locked if the input had items
@@ -269,6 +279,27 @@ public class LewisBlockScreenHandler extends ScreenHandler {
             return false;
         }
         return super.canInsertIntoSlot(slot);
+    }
+
+    @Override
+    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+        if (slotIndex > 0 && slotIndex < GRIDSIZE * 2) {
+            // ONLY GRID slots
+            if (SlotActionType.CLONE == actionType && player.getAbilities().creativeMode && getCursorStack().isEmpty()) {
+                Slot slot = this.slots.get(slotIndex);
+                if (!slot.hasStack())
+                    return;
+                ItemStack itemStack2 = slot.getStack().getItem().getDefaultStack().copy();
+                itemStack2.setCount(itemStack2.getMaxCount());
+                this.setCursorStack(itemStack2);
+                return;
+            } else if (actionType == SlotActionType.PICKUP && getSlot(slotIndex).getStack() != ItemStack.EMPTY && getCursorStack() != ItemStack.EMPTY) {
+                // Don't "swap" items
+                getSlot(slotIndex).canInsert(getCursorStack());
+                return;
+            }
+        }
+        super.onSlotClick(slotIndex, button, actionType, player);
     }
 
     /**

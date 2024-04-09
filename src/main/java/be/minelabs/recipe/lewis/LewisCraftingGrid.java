@@ -1,23 +1,24 @@
 package be.minelabs.recipe.lewis;
 
+import be.minelabs.Minelabs;
 import be.minelabs.science.Atom;
 import be.minelabs.recipe.molecules.Bond;
 import be.minelabs.recipe.molecules.MoleculeItemGraph;
 import be.minelabs.recipe.molecules.PartialMolecule;
 import be.minelabs.inventory.OrderedInventory;
 import be.minelabs.item.items.AtomItem;
+import be.minelabs.util.Graph;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LewisCraftingGrid extends OrderedInventory {
 
-    private PartialMolecule currentMolecule = new PartialMolecule();
+    protected PartialMolecule currentMolecule = new PartialMolecule();
 
     private final int width;
     private final int height;
@@ -26,13 +27,6 @@ public class LewisCraftingGrid extends OrderedInventory {
         super(width * height);
         this.width = width;
         this.height = height;
-    }
-
-    public LewisCraftingGrid(int width, int height, ItemStack... items) {
-        super(items);
-        this.width = width;
-        this.height = height;
-        markDirty();
     }
 
     @Override
@@ -120,9 +114,9 @@ public class LewisCraftingGrid extends OrderedInventory {
     /**
      * Make the actual bonds between elements.
      */
-    private MoleculeItemGraph positionGraphToMoleculeItemGraph(MoleculeItemGraph structure) {
-        List<Atom> sourceOrder = Stream.of("H", "F", "Cl", "Br", "I", "O", "N", "C", "B", "S", "P", "Si", "Al", "Sn", "Pb").map(Atom::getBySymbol).toList();
-        List<Atom> targetOrder = Stream.of("O", "N", "C", "B", "S", "P", "Si", "Al", "Sn", "Pb", "I", "Br", "Cl", "F", "H").map(Atom::getBySymbol).toList();
+    protected MoleculeItemGraph positionGraphToMoleculeItemGraph(MoleculeItemGraph structure) {
+        List<Atom> sourceOrder = Stream.of("H", "F", "Cl", "Br", "I", "S", "N", "C", "B", "P", "O", "Si", "Al", "Sn", "Pb").map(Atom::getBySymbol).toList();
+        List<Atom> targetOrder = Stream.of("C", "N", "O", "B", "S", "P", "Si", "Al", "Sn", "Pb", "I", "Br", "Cl", "F", "H").map(Atom::getBySymbol).toList();
 
         for (Atom sourceAtom : sourceOrder) {
             boolean changed = true;
@@ -131,9 +125,18 @@ public class LewisCraftingGrid extends OrderedInventory {
                 for (MoleculeItemGraph.Vertex source : structure.getVertices()) {
                     if (source.data != sourceAtom) continue;
                     if (structure.getOpenConnections(source) < 1) continue;
-                    MoleculeItemGraph.Vertex target = source.getNeighbours().stream()
+
+                    Map<MoleculeItemGraph.Vertex, Integer> openConnectionsMap = source.getNeighbours().stream()
                             .filter(t -> structure.getOpenConnections(t) > 0)
-                            .min(Comparator.comparingInt(t -> targetOrder.indexOf(((AtomItem) t.data.getItem()).getAtom())))
+                            .collect(Collectors.toMap(Function.identity(), structure::getOpenConnections));
+
+                    Map<MoleculeItemGraph.Vertex, Bond> edgeDataMap = openConnectionsMap.keySet().stream()
+                            .collect(Collectors.toMap(Function.identity(), o -> structure.getEdge(source, o).data));
+
+                    MoleculeItemGraph.Vertex target = openConnectionsMap.entrySet().stream()
+                            .sorted(Comparator.comparingInt(entry -> edgeDataMap.get(entry.getKey()).bondOrder))
+                            .min(Comparator.comparingInt(entry -> targetOrder.indexOf(((AtomItem) entry.getKey().data.getItem()).getAtom())))
+                            .map(Map.Entry::getKey)
                             .orElse(null);
                     if (target == null) continue;
                     changed = changed || structure.incrementBond(source, target);

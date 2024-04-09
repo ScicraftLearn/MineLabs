@@ -2,7 +2,6 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "minelabs:item/atom_violet",
-    "layer1": "minelabs:item/potassium",
-    "layer2": "minelabs:item/electrons1"
+    "layer1": "minelabs:item/potassium"
   }
 }

@@ -31,7 +31,7 @@ public class MoleculeGraphJsonFormat {
         public int bondOrder = 1;
     }
 
-    public MoleculeGraph get() throws JsonSyntaxException{
+    public MoleculeGraph get() throws JsonSyntaxException {
         MoleculeGraph graph = new MoleculeGraph();
         Map<String, MoleculeGraph.Vertex> vertices = new HashMap<>();
         for (AtomJson atom : atoms) {
@@ -48,7 +48,7 @@ public class MoleculeGraphJsonFormat {
             MoleculeGraph.Vertex v2 = vertices.get(bond.to);
             if (v2 == null)
                 throw new JsonSyntaxException("Reference to unknown vertex in edge description '" + bond.to + "'");
-            try{
+            try {
                 graph.addEdge(v1, v2, Bond.get(bond.bondOrder));
             } catch (IllegalArgumentException e) {
                 throw new JsonSyntaxException("Edge between '" + v1 + "' and '" + v2 + "' already exists");

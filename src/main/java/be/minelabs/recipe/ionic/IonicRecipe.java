@@ -19,9 +19,13 @@ public class IonicRecipe implements Recipe<IonicInventory> {
     private final JsonObject leftjson;
     private final int leftdensity;
     private final int leftCharge;
+    private final int leftAmount;
+
     private final JsonObject rightjson;
     private final int rightdensity;
     private final int rightCharge;
+    private final int rightAmount;
+
     private final Identifier id;
     private final PartialMolecule leftMolecule;
     private final PartialMolecule rightMolecule;
@@ -34,7 +38,9 @@ public class IonicRecipe implements Recipe<IonicInventory> {
     private final Boolean container;
 
 
-    IonicRecipe(JsonObject leftjson, int leftdensity, int leftCharge, JsonObject rightjson, int rightdensity, int rightCharge, ItemStack output, Identifier id) {
+    IonicRecipe(JsonObject leftjson, int leftdensity, int leftCharge, int leftAmount,
+                JsonObject rightjson, int rightdensity, int rightCharge, int rightAmount,
+                ItemStack output, boolean container, int time, Identifier id) {
         MoleculeGraphJsonFormat leftGraph = new Gson().fromJson(leftjson, MoleculeGraphJsonFormat.class);
         this.leftMolecule = new PartialMolecule(leftGraph.get());
 
@@ -44,13 +50,17 @@ public class IonicRecipe implements Recipe<IonicInventory> {
         this.leftjson = leftjson;
         this.leftdensity = leftdensity;
         this.leftCharge = leftCharge;
+        this.leftAmount = leftAmount;
+
         this.rightjson = rightjson;
         this.rightdensity = rightdensity;
         this.rightCharge = rightCharge;
+        this.rightAmount = rightAmount;
+
         this.output = output;
         this.id = id;
-        this.time = 23;
-        this.container = true;
+        this.time = time;
+        this.container = container;
 
         this.leftingredients.addAll(leftMolecule.getIngredients().stream().map(atom -> Ingredient.ofItems(atom.getItem())).toList());
         this.rightingredients.addAll(rightMolecule.getIngredients().stream().map(atom -> Ingredient.ofItems(atom.getItem())).toList());
@@ -70,6 +80,11 @@ public class IonicRecipe implements Recipe<IonicInventory> {
     public boolean matches(IonicInventory inventory, World world) {
         boolean left = inventory.getLeftGrid().getPartialMolecule().getStructure().isIsomorphicTo(leftMolecule.getStructure());
         boolean right = inventory.getRightGrid().getPartialMolecule().getStructure().isIsomorphicTo(rightMolecule.getStructure());
+
+        //boolean i_left = inventory.getRightGrid().getPartialMolecule().getStructure().isIsomorphicTo(leftMolecule.getStructure());
+        //boolean i_right = inventory.getLeftGrid().getPartialMolecule().getStructure().isIsomorphicTo(rightMolecule.getStructure());
+
+        //return left && right || i_left && i_right;
         return left && right;
     }
 
@@ -128,8 +143,16 @@ public class IonicRecipe implements Recipe<IonicInventory> {
         return leftCharge;
     }
 
+    public int getLeftAmount() {
+        return leftAmount;
+    }
+
     public int getRightCharge() {
         return rightCharge;
+    }
+
+    public int getRightAmount() {
+        return rightAmount;
     }
 
     public int getTime() {
@@ -159,13 +182,29 @@ public class IonicRecipe implements Recipe<IonicInventory> {
 
             int leftDensity = left.get("density").getAsInt();
             int leftCharge = left.get("charge").getAsInt();
+            int leftAmount = left.get("amount").getAsInt();
 
             JsonObject right = json.getAsJsonObject("anion");
             int rightDensity = right.get("density").getAsInt();
-            int rightCharge = left.get("charge").getAsInt();
+            int rightCharge = right.get("charge").getAsInt();
+            int rightAmount = right.get("amount").getAsInt();
 
             ItemStack output = ShapedRecipe.outputFromJson(json.getAsJsonObject("result"));
-            return new IonicRecipe(left.getAsJsonObject("structure"), leftDensity, leftCharge, right.getAsJsonObject("structure"), rightDensity, rightCharge, output, id);
+
+            boolean container = true;
+            if (json.get("container") != null) {
+                container = json.get("container").getAsBoolean();
+            }
+
+            int time = 23;
+            if (json.get("time") != null) {
+                time = json.get("time").getAsInt();
+            }
+
+            return new IonicRecipe(
+                    left.getAsJsonObject("structure"), leftDensity, leftCharge, leftAmount,
+                    right.getAsJsonObject("structure"), rightDensity, rightCharge, rightAmount,
+                    output, container, time, id);
         }
 
         @Override
@@ -173,11 +212,22 @@ public class IonicRecipe implements Recipe<IonicInventory> {
             JsonObject leftJson = JsonParser.parseString(buf.readString()).getAsJsonObject();
             int leftDensity = buf.readInt();
             int leftCharge = buf.readInt();
+            int leftAmount = buf.readInt();
+
             JsonObject rightJson = JsonParser.parseString(buf.readString()).getAsJsonObject();
             int rightDensity = buf.readInt();
             int rightCharge = buf.readInt();
+            int rightAmount = buf.readInt();
+
             ItemStack output = buf.readItemStack();
-            return new IonicRecipe(leftJson, leftDensity, leftCharge, rightJson, rightDensity, rightCharge, output, id);
+
+            boolean container = buf.readBoolean();
+            int time = buf.readInt();
+
+            return new IonicRecipe(
+                    leftJson, leftDensity, leftCharge, leftAmount,
+                    rightJson, rightDensity, rightCharge, rightAmount,
+                    output, container, time, id);
         }
 
         @Override
@@ -185,10 +235,14 @@ public class IonicRecipe implements Recipe<IonicInventory> {
             buf.writeString(recipe.leftjson.toString());
             buf.writeInt(recipe.leftdensity);
             buf.writeInt(recipe.leftCharge);
+            buf.writeInt(recipe.leftAmount);
             buf.writeString(recipe.rightjson.toString());
             buf.writeInt(recipe.rightdensity);
             buf.writeInt(recipe.rightCharge);
+            buf.writeInt(recipe.rightAmount);
             buf.writeItemStack(recipe.output);
+            buf.writeBoolean(recipe.container);
+            buf.writeInt(recipe.time);
         }
     }
 }

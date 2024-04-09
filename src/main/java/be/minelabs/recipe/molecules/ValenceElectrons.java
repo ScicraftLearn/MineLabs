@@ -39,6 +39,7 @@ public class ValenceElectrons {
     private void addElectrons(Map<String, Integer> bondDirections, int count, boolean forced) {
         //inverse bonddir & voorkeur N-E-S-W
         // int: in  elke richting 0,1,2
+        //int runs = 0;
         while (count > 0) {
             for (String key : getBestList(bondDirections, forced)) {
                 if (count == 0) {
@@ -54,6 +55,7 @@ public class ValenceElectrons {
                     }
                 }
             }
+           // runs++;
         }
     }
 

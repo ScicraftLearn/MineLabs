@@ -7,31 +7,33 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.slot.Slot;
 
+import java.util.function.Predicate;
+
 /**
  * Lockable slot
  * Only allows changes if unlocked
  */
 public class LockableGridSlot extends Slot {
 
-    public LockableGridSlot(Inventory inventory, int index, int x, int y) {
+    private final Predicate<ItemStack> predicate;
+
+    public LockableGridSlot(Inventory inventory, int index, int x, int y, Predicate<ItemStack> predicate) {
         super(inventory, index, x, y);
+        this.predicate = predicate;
     }
 
     @Override
     public boolean canInsert(ItemStack stack) {
         if (this.isLocked()) return false;
-        if (stack == null || stack.getItem().equals(Items.AIR))
+        if (stack == null || stack.getItem().equals(Items.AIR)) {
             this.setStack(stack);
-        else if (stack.getItem() instanceof AtomItem atom) {
-            switch (atom.getAtom().getType()) {
-                case POST_TRANSITION_METAL:
-                case NON_METAL:
-                case NOBLE_GAS:
-                    this.setStack(atom.getDefaultStack());
-                    this.getStack().getOrCreateNbt().putBoolean("MinelabsItemInLCT", true);
-                default:
-                    return false;
-            }
+            return true;
+        }
+        if (predicate.test(stack)) {
+            AtomItem atom = (AtomItem) stack.getItem();
+            this.setStack(atom.getDefaultStack());
+            this.getStack().getOrCreateNbt().putBoolean("MinelabsItemInLCT", true);
+            return true;
         }
         return false;
     }

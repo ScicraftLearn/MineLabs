@@ -17,6 +17,7 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +40,7 @@ public class IonicBlockScreenHandler extends ScreenHandler {
      * This gives it the Blockpos of the BlockEntity
      */
     public IonicBlockScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buff) {
-        this(syncId, playerInventory, new IonicInventory(9, 9, 11), new ArrayPropertyDelegate(6), buff.readBlockPos());
+        this(syncId, playerInventory, new IonicInventory(9, 9, 11), new ArrayPropertyDelegate(8), buff.readBlockPos());
     }
 
     /**
@@ -71,6 +72,9 @@ public class IonicBlockScreenHandler extends ScreenHandler {
             @Override
             public void onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack) {
                 if (slotId < GRIDSIZE * 2) {
+                    setLeftCharge(inventory.getLeftGrid().getCharge());
+                    setRightCharge(-inventory.getRightGrid().getCharge());
+
                     ionic.updateRecipe();
                     onGridChanged(playerInventory.player);
                 }
@@ -79,7 +83,9 @@ public class IonicBlockScreenHandler extends ScreenHandler {
 
             @Override
             public void onPropertyUpdate(ScreenHandler handler, int property, int value) {
-                updateToClient();
+                if (property == 6 || property == 7) {
+                    ionic.updateRecipe();
+                }
             }
         });
 
@@ -88,7 +94,6 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         addGridSlots();
         addIOSlots();
         addPlayerSlots(playerInventory);
-
     }
 
     /**
@@ -182,16 +187,101 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         return true;
     }
 
+    @Override
+    public boolean onButtonClick(PlayerEntity player, int id) {
+        return switch (id) {
+            case 0 -> {
+                // Clear btn
+                if (isInputEmpty()) {
+                    // clear grid + amount numbers
+                    for (int i = 0; i < GRIDSIZE * 2; i++) {
+                        inventory.setStack(i, ItemStack.EMPTY);
+                    }
+                    setLeftAmount(1);
+                    setRightAmount(1);
+
+                    inventory.markDirty();
+                } else {
+                    for (int i = 18; i < 27; i++) {
+                        ItemStack itemStack = inventory.removeStack(i);
+                        if (!player.getInventory().insertStack(itemStack)) {
+                            player.dropItem(itemStack, false);
+                        }
+                    }
+                }
+                yield true;
+            }
+            case 1 -> {
+                // LEFT MINUS
+                int charge = getLeftAmount();
+                if (charge <= 1) {
+                    yield false;
+                }
+                setLeftAmount(charge - 1);
+                yield true;
+            }
+            case 2 -> {
+                // LEFT PLUS
+                int charge = getLeftAmount();
+                if (charge >= 9) {
+                    yield false;
+                }
+                setLeftAmount(charge + 1);
+                yield true;
+            }
+            case 3 -> {
+                // RIGHT MINUS
+                int charge = getRightAmount();
+                if (charge <= 1) {
+                    yield false;
+                }
+                setRightAmount(charge - 1);
+                yield true;
+            }
+            case 4 -> {
+                // RIGHT PLUS
+                int charge = getRightAmount();
+                if (charge >= 9) {
+                    yield false;
+                }
+                setRightAmount(charge + 1);
+                yield true;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+    }
+
+    @Override
+    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+        if (slotIndex > 0 && slotIndex < GRIDSIZE * 2) {
+            // ONLY GRID slots
+            if (SlotActionType.CLONE == actionType && player.getAbilities().creativeMode && getCursorStack().isEmpty()) {
+                Slot slot = this.slots.get(slotIndex);
+                if (!slot.hasStack())
+                    return;
+                ItemStack itemStack2 = slot.getStack().getItem().getDefaultStack().copy();
+                itemStack2.setCount(itemStack2.getMaxCount());
+                this.setCursorStack(itemStack2);
+                return;
+            } else if (actionType == SlotActionType.PICKUP && getSlot(slotIndex).getStack() != ItemStack.EMPTY && getCursorStack() != ItemStack.EMPTY) {
+                // Don't "swap" items
+                getSlot(slotIndex).canInsert(getCursorStack());
+                return;
+            }
+        }
+        super.onSlotClick(slotIndex, button, actionType, player);
+    }
+
+    public DefaultedList<Ingredient> getIngredients() {
+        return ionic.getIngredients();
+    }
+
+    public int getSplitIndex() {
+        return ionic.getSplit();
+    }
+
     public int getProgress() {
         return propertyDelegate.get(0);
-    }
-
-    public DefaultedList<Ingredient> getLeftIngredients() {
-        return ionic.getLeftIngredients();
-    }
-
-    public DefaultedList<Ingredient> getRightIngredients() {
-        return ionic.getRightIngredients();
     }
 
     public int getLeftDensity() {
@@ -202,13 +292,55 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         return propertyDelegate.get(2);
     }
 
+    public void setLeftCharge(int amount) {
+        propertyDelegate.set(3, amount);
+    }
+
     public int getLeftCharge() {
         return propertyDelegate.get(3);
+    }
+
+    public void setRightCharge(int amount) {
+        propertyDelegate.set(4, amount);
     }
 
     public int getRightCharge() {
         return propertyDelegate.get(4);
     }
+
+
+    public int getLeftAmount() {
+        return propertyDelegate.get(6);
+    }
+
+    public void setLeftAmount(int value) {
+        if (value <= 1) {
+            propertyDelegate.set(6, 1);
+            return;
+        }
+        if (value >= 9) {
+            propertyDelegate.set(6, 9);
+            return;
+        }
+        propertyDelegate.set(6, value);
+    }
+
+    public int getRightAmount() {
+        return propertyDelegate.get(7);
+    }
+
+    public void setRightAmount(int value) {
+        if (value <= 1) {
+            propertyDelegate.set(7, 1);
+            return;
+        }
+        if (value >= 9) {
+            propertyDelegate.set(7, 9);
+            return;
+        }
+        propertyDelegate.set(7, value);
+    }
+
 
     //A recipe is found (so the density is larger than 0)
     public boolean hasRecipe() {
@@ -220,42 +352,23 @@ public class IonicBlockScreenHandler extends ScreenHandler {
     }
 
     private void addIOSlots() {
+        int y = 107;
         //row of inputslots
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(inventory, i + 18, 12 + i * 18, 86) {
-
-                @Override
-                public boolean isEnabled() {
-                    return hasRecipe();
-                }
-
+            this.addSlot(new Slot(inventory, i + 18, 12 + i * 18, y) {
                 @Override
                 public boolean canInsert(ItemStack stack) {
-                    if (getLeftIngredients().size() > this.getIndex() - 2 * GRIDSIZE && this.getIndex() - 2 * GRIDSIZE >= 0) {
-                        return getLeftIngredients().get(this.getIndex() - 2 * GRIDSIZE).test(stack);
-                    }
-                    if (getRightIngredients().size() > this.getIndex() - 2 * GRIDSIZE - getLeftIngredients().size() && this.getIndex() - 2 * GRIDSIZE - getLeftIngredients().size() >= 0) {
-                        return getRightIngredients().get(this.getIndex() - 2 * GRIDSIZE - getLeftIngredients().size()).test(stack);
+                    if (getIngredients().size() > this.getIndex() - GRIDSIZE * 2) {
+                        return getIngredients().get(this.getIndex() - GRIDSIZE * 2).test(stack);
                     }
                     return false;
-                }
-
-                @Override
-                public int getMaxItemCount(ItemStack stack) {
-                    if (getLeftIngredients().size() > this.getIndex() - 2 * GRIDSIZE) { //Slot difference of GRIDSIZE due to the grid
-                        return getLeftDensity();
-                    }
-                    if (getRightIngredients().size() > this.getIndex() - 2 * GRIDSIZE - getLeftIngredients().size()) { //Slot difference of GRIDSIZE due to the grid
-                        return getRightDensity();
-                    }
-                    return 0;
                 }
             });
         }
         //erlemeyer slot
-        this.addSlot(new FilteredSlot(inventory, 27, 178, 86, s -> s.isOf(Items.ERLENMEYER)));
+        this.addSlot(new FilteredSlot(inventory, 27, 178, y, s -> s.isOf(Items.ERLENMEYER)));
         //result slot
-        this.addSlot(new CraftingResultSlot(inventory, 28, 176, 40));
+        this.addSlot(new CraftingResultSlot(inventory, 28, 178, 47));
     }
 
     private void addGridSlots() {
@@ -264,7 +377,7 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         //22 is the y position where the top-left corner of the square needs to be
         for (int i = 0; i < 3; i++) {
             for (int y = 0; y < 3; y++) {
-                this.addSlot(new LockableGridSlot(inventory, i * 3 + y, 14 + y * 18, 22 + i * 18) {
+                this.addSlot(new LockableGridSlot(inventory, i * 3 + y, 12 + y * 18, 28 + i * 18, stack -> true) {
                     @Override
                     public boolean isLocked() {
                         return !isInputEmpty();
@@ -275,7 +388,7 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         //second 3x3 gridslots(right)
         for (int i = 0; i < 3; i++) {
             for (int y = 0; y < 3; y++) {
-                this.addSlot(new LockableGridSlot(inventory, i * 3 + y + 9, 87 + y * 18, 22 + i * 18) {
+                this.addSlot(new LockableGridSlot(inventory, i * 3 + y + 9, 87 + y * 18, 28 + i * 18, stack -> true) {
                     @Override
                     public boolean isLocked() {
                         return !isInputEmpty();
@@ -289,12 +402,46 @@ public class IonicBlockScreenHandler extends ScreenHandler {
         //The player inventory (3x9 slots)
         for (int m = 0; m < 3; ++m) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 23 + l * 18, 118 + m * 18));
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 23 + l * 18, 139 + m * 18));
             }
         }
         //The player Hotbar (9 slots)
         for (int m = 0; m < 9; ++m) {
-            this.addSlot(new Slot(playerInventory, m, 23 + m * 18, 176));
+            this.addSlot(new Slot(playerInventory, m, 23 + m * 18, 197));
         }
+    }
+
+    public int getScaledProgress() {
+        int progress = getProgress();
+        int maxProgress = propertyDelegate.get(5);
+        int arrowSize = 26;
+        return maxProgress != 0 && progress != 0 ? progress * arrowSize / maxProgress : 0;
+    }
+
+    public boolean isCrafting() {
+        return getProgress() > 0;
+    }
+
+    /*
+     * 0: Invalid
+     * 1: To many molecules
+     * 2: Not implemented
+     * 3: Valid
+     */
+    public int getStatus() {
+        // TODO improve (to many MOL)
+        if (inventory.getLeftGrid().isEmpty() || inventory.getRightGrid().isEmpty()) {
+            return 0;
+        }
+        if (getLeftAmount() * getLeftCharge() + getRightAmount() * getRightCharge() == 0) {
+            if (hasRecipe()) {
+                // GREEN
+                return 3;
+            } else {
+                // NOT IMPLEMENTED
+                return 2;
+            }
+        }
+        return 0;
     }
 }
