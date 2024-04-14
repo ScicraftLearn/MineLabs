@@ -1,5 +1,6 @@
 package be.minelabs.screen;
 
+import be.minelabs.block.entity.AtomicStorageBlockEntity;
 import be.minelabs.inventory.AtomicInventory;
 import be.minelabs.item.Items;
 import be.minelabs.screen.slot.AtomSlot;
@@ -17,7 +18,8 @@ public class AtomStorageScreenHandler extends ScreenHandler {
     private final AtomicInventory inventory;
 
     public AtomStorageScreenHandler(int syncId, PlayerInventory inventory) {
-        this(syncId, inventory, new AtomicInventory(AtomicInventory.STORAGE_STACK));
+        // TODO: shouldn't this depend on pack/block?
+        this(syncId, inventory, new AtomicInventory(AtomicStorageBlockEntity.STACK_SIZE));
     }
 
     public AtomStorageScreenHandler(int syncId, @NotNull PlayerInventory playerInventory, Inventory inventory) {

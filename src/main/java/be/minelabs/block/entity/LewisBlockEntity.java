@@ -180,9 +180,9 @@ public class LewisBlockEntity extends BlockEntity implements ExtendedScreenHandl
         for (int i = 0; i < ingredients.size(); i++) {
             AtomicStorageBlockEntity atomic_storage = getAtomicStorage();
             int count = currentRecipe.getDensity();
-            if (atomic_storage != null) {
-                count = atomic_storage.getInventory().removeStack(ingredients.get(i), count);
-            }
+//            if (atomic_storage != null) {
+//                count = atomic_storage.getInventory().removeStack(ingredients.get(i), count);
+//            }
             ioInventory.getStack(i).decrement(count);
         }
         // Remove a container item if needed
@@ -215,11 +215,12 @@ public class LewisBlockEntity extends BlockEntity implements ExtendedScreenHandl
         // TODO REFINE, DONT want to disable old working only add new (else if needs to change)
         for (int i = 0; i < ingredients.size(); i++) {
             Ingredient ingredient = ingredients.get(i);
-            if (atomic_storage != null) {
-                if (!atomic_storage.getInventory().contains(ingredient, currentRecipe.getRequiredAmount(ingredient))) {
-                    return false;
-                }
-            } else if (!ingredient.test(ioInventory.getStack(i)) || ioInventory.getStack(i).getCount() < currentRecipe.getDensity()) {
+//            if (atomic_storage != null) {
+//                if (!atomic_storage.getInventory().contains(ingredient, currentRecipe.getRequiredAmount(ingredient))) {
+//                    return false;
+//                }
+//            } else
+            if (!ingredient.test(ioInventory.getStack(i)) || ioInventory.getStack(i).getCount() < currentRecipe.getDensity()) {
                 return false;
             }
         }

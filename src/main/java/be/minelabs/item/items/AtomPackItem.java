@@ -21,6 +21,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class AtomPackItem extends Item {
 
+    public static final int STACK_SIZE = 256;
+    private static final String NBT_INVENTORY_KEY = "Items";
+
     public AtomPackItem(Settings settings) {
         super(settings);
     }
@@ -29,15 +32,7 @@ public class AtomPackItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (hand == Hand.MAIN_HAND && !world.isClient) {
             // Use NBT to load INV
-            AtomicInventory inventory = new AtomicInventory(user.getStackInHand(hand).getOrCreateNbt()) {
-                // Save NBT on close (no unnecessary syncs)
-                @Override
-                public void onClose(PlayerEntity player) {
-                    super.onClose(player);
-                    NbtCompound nbt = player.getStackInHand(hand).getOrCreateNbt();
-                    writeNbt(nbt);
-                }
-            };
+            AtomicInventory inventory = getInventory(user.getStackInHand(hand));
 
             user.openHandledScreen(new NamedScreenHandlerFactory() {
                 @Override
@@ -70,13 +65,34 @@ public class AtomPackItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (context.getWorld().getBlockState(context.getBlockPos()).getBlock() == Blocks.ATOMIC_STORAGE && context.getPlayer().isSneaking()) {
-            AtomicInventory storage_inventory = ((AtomicStorageBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos())).getInventory();
-            AtomicInventory pack_inventory = new AtomicInventory(AtomicInventory.PACK_STACK);
-            pack_inventory.onOpen(context.getPlayer());
-            storage_inventory.tryToFill(pack_inventory);
-            pack_inventory.onClose(context.getPlayer());
+            AtomicInventory blockInventory = ((AtomicStorageBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos())).getInventory();
+            AtomicInventory packInventory = getInventory(context.getStack());
+            packInventory.onOpen(context.getPlayer());
+            for (ItemStack stack : packInventory.getStacks()){
+                packInventory.setStack(blockInventory.addStack(stack));
+            }
+            packInventory.onClose(context.getPlayer());
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
     }
+
+    public static AtomicInventory getInventory(ItemStack pack){
+        // TODO: issue: when multiple inventories open (screen and item pickup from world for example), they don't sync and overwrite each other's changes.
+        AtomicInventory inventory = new AtomicInventory(STACK_SIZE);
+        NbtCompound nbt = pack.getSubNbt(NBT_INVENTORY_KEY);
+        if (nbt != null)
+            inventory.readNbt(nbt);
+        inventory.addListener(i -> {
+            pack.setSubNbt(NBT_INVENTORY_KEY, inventory.writeNbt());
+        });
+        return inventory;
+    }
+
+    public static int insert(ItemStack pack, ItemStack toInsert){
+        AtomicInventory inv = getInventory(pack);
+        ItemStack leftover = inv.addStack(toInsert);
+        return leftover.getCount();
+    }
+
 }

@@ -5,6 +5,7 @@ import be.minelabs.block.entity.LewisBlockEntity;
 import be.minelabs.inventory.AtomicInventory;
 import be.minelabs.inventory.OrderedInventory;
 import be.minelabs.item.Items;
+import be.minelabs.item.items.AtomPackItem;
 import be.minelabs.recipe.lewis.LewisCraftingGrid;
 import be.minelabs.recipe.molecules.Bond;
 import be.minelabs.recipe.molecules.MoleculeGraph;
@@ -280,7 +281,7 @@ public class LewisBlockScreenHandler extends ScreenHandler {
     }
 
     public void openAtomPack(ItemStack stack) {
-        openAtomic(new AtomicInventory(stack.getOrCreateNbt()));
+        openAtomic(AtomPackItem.getInventory(stack));
     }
 
     public void openAtomicStorage() {
@@ -297,10 +298,6 @@ public class LewisBlockScreenHandler extends ScreenHandler {
 
     public void closeAtomicStorage() {
         if (atomicStorage != EMPTY_STORAGE) {
-            if (clickedIndex > -1) {
-                // ATOM PACK
-                getSlot(clickedIndex).getStack().setNbt(atomicStorage.writeNbt(new NbtCompound()));
-            }
             clickedIndex = -1;
             atomicStorage = EMPTY_STORAGE;
         }

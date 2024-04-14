@@ -23,7 +23,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class AtomicStorageBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, SidedStorageBlockEntity {
 
-    private AtomicInventory inventory = new AtomicInventory(AtomicInventory.STORAGE_STACK);
+    public static final int STACK_SIZE = 512;
+    private static final String NBT_INVENTORY_KEY = "Items";
+
+    private AtomicInventory inventory = new AtomicInventory(STACK_SIZE);
 
     public AtomicStorageBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.ATOMIC_STORAGE_BLOCK_ENTITY, pos, state);
@@ -53,12 +56,12 @@ public class AtomicStorageBlockEntity extends BlockEntity implements NamedScreen
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        inventory.writeNbt(nbt);
+        nbt.put(NBT_INVENTORY_KEY, inventory.writeNbt());
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        this.inventory = new AtomicInventory(AtomicInventory.STORAGE_STACK);
+        this.inventory = new AtomicInventory(STACK_SIZE);
         inventory.readNbt(nbt);
         super.readNbt(nbt);
     }
